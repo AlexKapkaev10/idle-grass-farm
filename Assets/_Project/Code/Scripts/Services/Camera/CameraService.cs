@@ -7,34 +7,21 @@ namespace Project.Services
     public interface ICameraService
     {
         void SetTarget(Transform target);
-        void Follow();
     }
     
     public class CameraService : ICameraService
     {
-        private readonly Transform _cameraTransform;
-        private readonly CameraServiceConfig _config;
-        private Transform _target;
+        private readonly ICameraHandler _handler;
 
         [Inject]
         public CameraService(CameraServiceConfig config)
         {
-            _config = config;
-            _cameraTransform = Object.Instantiate(_config.CameraPrefab, null).transform;
+            _handler = Object.Instantiate(config.CameraPrefab, null);
         }
 
         public void SetTarget(Transform target)
         {
-            _target = target;
-        }
-
-        public void Follow()
-        {
-            _cameraTransform.position = new Vector3(
-                _target.position.x + _config.Offset.x,
-                _cameraTransform.position.y,
-                _target.position.z + _config.Offset.z
-            );
+            _handler.SetTarget(target);
         }
     }
 }

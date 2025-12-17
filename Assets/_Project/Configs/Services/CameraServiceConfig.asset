@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866df22f438c43019e87281f6749e859, type: 3}
   m_Name: CameraServiceConfig
   m_EditorClassIdentifier: 
-  <CameraPrefab>k__BackingField: {fileID: 374767979105053011, guid: c0d8f063c979bf84b8449b81e1f574b7, type: 3}
+  <CameraPrefab>k__BackingField: {fileID: 1461447384326923168, guid: ef2118a294d56ab4aa5d089dbaee53c8, type: 3}
   <Offset>k__BackingField: {x: 0, y: 0, z: -5}
