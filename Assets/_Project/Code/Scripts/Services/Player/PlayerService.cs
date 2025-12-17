@@ -13,6 +13,7 @@ namespace Project.Services
 
         private IPlayer _player;
         private IMovement _movement;
+        private IAnimatorComponent _animatorComponent;
 
         public PlayerService(IInputService inputService, ICameraService cameraService, PlayerServiceConfig config)
         {
@@ -26,7 +27,15 @@ namespace Project.Services
             _player = Object.Instantiate(_config.PlayerPrefab);
             
             _movement = _player.Movement;
+            _animatorComponent = _player.AnimatorComponent;
             _cameraService.SetTarget(_player.Transform);
+            
+            _movement.Running += OnRun;
+        }
+
+        private void OnRun(bool isRunning)
+        {
+            _animatorComponent.SetBool(_config.IsRun, isRunning);
         }
 
         public void Tick()

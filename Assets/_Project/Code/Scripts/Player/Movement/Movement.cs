@@ -1,17 +1,14 @@
+using System;
 using UnityEngine;
 
 namespace Project.Game
 {
-    public interface IMovement
-    {
-        void Move(Vector3 direction, float speed);
-        void UpdateRotation(Vector3 direction, float speed);
-    }
-    
     public class Movement : MonoBehaviour, IMovement
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _body;
+        
+        public event Action<bool> Running;
 
         private readonly float _minMagnitude = 0.0001f;
         private bool _wasRunning;
@@ -45,20 +42,13 @@ namespace Project.Game
             }
 
             _wasRunning = isRunning;
-
-            if (isRunning)
-            {
-                Debug.Log(isRunning);
-            }
-            else
-            {
-                Debug.Log(isRunning);
-            }
+            
+            Running?.Invoke(isRunning);
         }
 
         private bool IsRun()
         {
-            return transform.position.sqrMagnitude > _minMagnitude * _minMagnitude;
+            return _characterController.velocity.sqrMagnitude > _minMagnitude;
         }
     }
 }
