@@ -1,4 +1,4 @@
-using System;
+using DG.Tweening;
 using Project.UI.Custom;
 using UnityEngine;
 
@@ -11,6 +11,7 @@ namespace Project.UI.MVP
     
     public class LoaderView : MonoBehaviour, ILoaderView
     {
+        [SerializeField] private CanvasGroup _canvasGroup;
         [field: SerializeField] public CustomSlider SliderProgress { get; private set; }
 
         private void Awake()
@@ -20,7 +21,10 @@ namespace Project.UI.MVP
 
         public void Destroy()
         {
-            Destroy(gameObject);
+            _canvasGroup.DOFade(0.0f, 0.5f)
+                .From(1.0f)
+                .SetEase(Ease.Linear)
+                .OnComplete(()=> Destroy(gameObject));
         }
     }
 }

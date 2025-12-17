@@ -1,3 +1,4 @@
+using Project.Input;
 using Project.ScriptableObjects;
 using Project.Services;
 using Project.UI.MVP;
@@ -16,7 +17,10 @@ namespace Project.Core
             builder.Register<SceneLoadService>(Lifetime.Singleton)
                 .As<ISceneLoadService>();
             
-            builder.Register<LoaderPresenter>(Lifetime.Scoped)
+            builder.Register<InputService>(Lifetime.Singleton)
+                .As<IInputService>();
+            
+            builder.Register<LoaderPresenter>(Lifetime.Singleton)
                 .As<ILoaderPresenter>()
                 .WithParameter(_loaderPresenterConfig);
         }

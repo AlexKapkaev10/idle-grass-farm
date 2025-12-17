@@ -85,7 +85,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 52952505775908787, guid: c6b275ee777235045bc196f18783fc69, type: 3}
       propertyPath: m_Name
-      value: LoaderView Variant
+      value: LoaderView
       objectReference: {fileID: 0}
     - target: {fileID: 2887962147986300939, guid: c6b275ee777235045bc196f18783fc69, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -208,6 +208,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SliderProgress>k__BackingField: {fileID: 2730431073752069806}
+  _canvasGroup: {fileID: 6879901396109081004}
+--- !u!225 &6879901396109081004 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 7356883038927275637, guid: c6b275ee777235045bc196f18783fc69, type: 3}
+  m_PrefabInstance: {fileID: 4135069698315321305}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4690367909654944872
 PrefabInstance:
   m_ObjectHideFlags: 0

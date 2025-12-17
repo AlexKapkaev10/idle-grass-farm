@@ -1,3 +1,5 @@
+
+
 namespace Project.UI.MVP
 {
     public interface IView
