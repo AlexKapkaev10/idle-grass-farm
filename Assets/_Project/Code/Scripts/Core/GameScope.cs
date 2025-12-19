@@ -1,3 +1,4 @@
+using Project.Game;
 using Project.ScriptableObjects;
 using Project.Services;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace Project.Core
             builder.Register<CameraService>(Lifetime.Scoped)
                 .As<ICameraService>()
                 .WithParameter(_cameraServiceConfig);
+
+            builder.Register<AbilityService>(Lifetime.Scoped)
+                .As<IAbilityService>();
         }
     }
 }

@@ -7,5 +7,7 @@ namespace Project.Game
         Movement Movement { get; }
         AnimatorComponent AnimatorComponent { get; }
         Transform Transform { get; }
+        Transform GroundTransform { get;}
+        public Transform ToolParent { get; }
     }
 }
