@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerServiceConfig
   m_EditorClassIdentifier: 
   <PlayerPrefab>k__BackingField: {fileID: 5472064540297798405, guid: 845c043e65d1cad4d927b2ce3ce560db, type: 3}
-  <MoveSpeed>k__BackingField: 5
+  <ToolPrefab>k__BackingField: {fileID: 8303582940724188655, guid: 0d348ab5c462d4847b7033020f9bc585, type: 3}
+  <MoveSpeed>k__BackingField: 4
   <RotateSpeed>k__BackingField: 800
   <SearchModelConfig>k__BackingField: {fileID: 11400000, guid: f7db606ac391f6346879ae67bad29a78, type: 2}

@@ -9,5 +9,6 @@ namespace Project.Game
         Transform Transform { get; }
         Transform GroundTransform { get;}
         public Transform ToolParent { get; }
+        public Transform ToolRangeTransform { get; }
     }
 }

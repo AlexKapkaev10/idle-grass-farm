@@ -11,6 +11,7 @@ namespace Project.Services
     {
         private readonly IInputService _inputService;
         private readonly ICameraService _cameraService;
+        private readonly IAbilityService _abilityService;
         private readonly PlayerServiceConfig _config;
 
         private IPlayer _player;
@@ -22,10 +23,14 @@ namespace Project.Services
         public event Action Mowed;
         public Transform Transform => _player.Transform;
 
-        public PlayerService(IInputService inputService, ICameraService cameraService, PlayerServiceConfig config)
+        public PlayerService(IInputService inputService, 
+            ICameraService cameraService, 
+            IAbilityService abilityService, 
+            PlayerServiceConfig config)
         {
             _inputService = inputService;
             _cameraService = cameraService;
+            _abilityService = abilityService;
             _config = config;
         }
 
@@ -36,6 +41,7 @@ namespace Project.Services
             _movement = _player.Movement;
             _animatorComponent = _player.AnimatorComponent;
             _cameraService.SetTarget(_player.Transform);
+            _player.ToolRangeTransform.gameObject.SetActive(false);
             
             _searchModel = new SearchModel(_player.GroundTransform, _config.SearchModelConfig);
             
@@ -66,6 +72,9 @@ namespace Project.Services
 
         public void SetMow(int animationID, bool isActive)
         {
+            var range = _abilityService.MowRange;
+            _player.ToolRangeTransform.localScale = new Vector3(range, range, range);
+            _player.ToolRangeTransform.gameObject.SetActive(isActive);
             SetAnimationBool(animationID, isActive);
             SetTool(isActive);
         }

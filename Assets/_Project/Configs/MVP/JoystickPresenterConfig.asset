@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e916a01f49498f9497f67b4e886652, type: 3}
+  m_Name: JoystickPresenterConfig
+  m_EditorClassIdentifier: 
+  <ViewPrefab>k__BackingField: {fileID: 8657569149943250442, guid: e021af2d9c753a848a7cbfbff3ae3546, type: 3}

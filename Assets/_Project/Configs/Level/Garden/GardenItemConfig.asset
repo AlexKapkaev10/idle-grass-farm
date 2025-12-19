@@ -15,5 +15,5 @@ MonoBehaviour:
   <EndMowValue>k__BackingField: {x: 1, y: 0.1, z: 1}
   <EndMowDuration>k__BackingField: 0.3
   <EndGrowDuration>k__BackingField: 2
-  <DelayGrowValue>k__BackingField: 5
+  <DelayGrowValue>k__BackingField: 10
   <CurveConfig>k__BackingField: {fileID: 11400000, guid: 87ccaf01a5da9bf40b514cca241df80e, type: 2}
