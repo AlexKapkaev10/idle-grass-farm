@@ -1,0 +1,19 @@
+# ninja log v5
+87	7403	7878670868433683	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	b6c430fb320eab43
+19	6094	7878670854820944	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	e0c8a4a3363d9cef
+43	6623	7878670860254144	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	aa3616908ef89efe
+1	7061	7878670864917439	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	a9d6a958804b7bb2
+75	6652	7878670860854333	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1a74645fb477386b
+7936	8201	7878670876490295	A:/Projects/idle-grass-farm/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4r116j6s/obj/arm64-v8a/libgame.so	84c52a9ae039fd5f
+63	6958	7878670863755878	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	9413a9af9faad73e
+31	7870	7878670873021683	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	29d7e080aabb5b4c
+53	7928	7878670873633336	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	8a66fe5ecb0c8f28
+65	3530	7880398970302541	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	aa3616908ef89efe
+53	3569	7880398970872915	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	9413a9af9faad73e
+27	3647	7880398971443897	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	e0c8a4a3363d9cef
+95	3676	7880398971942765	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	1a74645fb477386b
+38	3772	7880398972902335	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	a9d6a958804b7bb2
+110	4195	7880398977146056	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	b6c430fb320eab43
+80	4356	7880398978711715	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	8a66fe5ecb0c8f28
+14	4611	7880398981217369	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	29d7e080aabb5b4c
+4611	4942	7880398984636978	A:/Projects/idle-grass-farm/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4r116j6s/obj/arm64-v8a/libgame.so	84c52a9ae039fd5f

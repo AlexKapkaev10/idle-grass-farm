@@ -1,0 +1,2 @@
+A:\Projects\idle-grass-farm\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+A:\Projects\idle-grass-farm\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

@@ -15,6 +15,7 @@ namespace Project.Core
         [SerializeField] private CameraServiceConfig _cameraServiceConfig;
         [SerializeField] private AbilityServiceConfig _abilityServiceConfig;
         [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
+        [SerializeField] private InventoryServiceConfig _inventoryServiceConfig;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -33,6 +34,10 @@ namespace Project.Core
             builder.Register<AbilityService>(Lifetime.Scoped)
                 .As<IAbilityService>()
                 .WithParameter(_abilityServiceConfig);
+            
+            builder.Register<InventoryService>(Lifetime.Scoped)
+                .As<IInventoryService>()
+                .WithParameter(_inventoryServiceConfig);
 
             builder.Register<JoystickPresenter>(Lifetime.Scoped)
                 .As<IJoystickPresenter>()

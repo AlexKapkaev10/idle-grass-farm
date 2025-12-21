@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityDates:
   - Level: 1
-    Value: 1.4
+    Value: 1.6
   - Level: 2
     Value: 1.6
   - Level: 3
