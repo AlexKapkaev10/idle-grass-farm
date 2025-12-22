@@ -360,6 +360,7 @@ MonoBehaviour:
   <GroundTransform>k__BackingField: {fileID: 8232704686852279033}
   <ToolParent>k__BackingField: {fileID: 7904854553086592380}
   <ToolRangeTransform>k__BackingField: {fileID: 5992404712310280954}
+  <BodyTransform>k__BackingField: {fileID: 4099491153851917166}
 --- !u!143 &1354697570464246950
 CharacterController:
   m_ObjectHideFlags: 0

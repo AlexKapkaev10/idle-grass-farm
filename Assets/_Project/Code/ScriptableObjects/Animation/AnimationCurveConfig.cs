@@ -7,5 +7,6 @@ namespace Project.ScriptableObjects
     {
         [field: SerializeField] public AnimationCurve OutBounceEase { get; private set; }
         [field: SerializeField] public AnimationCurve InBounceEase { get; private set; }
+        [field: SerializeField] public Vector3 RotationAngle { get; private set; } = new(0.0f, 360.0f, 0.0f);
     }
 }

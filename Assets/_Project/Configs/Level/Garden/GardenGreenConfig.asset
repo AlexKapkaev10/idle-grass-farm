@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59af41360cf64406bfbec050c79dfd5a, type: 3}
   m_Name: GardenGreenConfig
   m_EditorClassIdentifier: 
-  <Material>k__BackingField: {fileID: 2100000, guid: 97fccf323a306d54d96ce99a96b5274b, type: 2}
   _animationName: IsMow
+  <CellMaterial>k__BackingField: {fileID: 2100000, guid: 97fccf323a306d54d96ce99a96b5274b, type: 2}
+  <ResourceMaterial>k__BackingField: {fileID: 2100000, guid: 41d6e441c0e421d41adb6503afc8bee1, type: 2}
+  <ResourceType>k__BackingField: 0

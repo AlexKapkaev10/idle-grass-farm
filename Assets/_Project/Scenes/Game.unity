@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass
       objectReference: {fileID: 0}
+    - target: {fileID: 1409560394829324178, guid: 208278057f3012446a5dde9c3d72c693, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2619494012645963312, guid: 208278057f3012446a5dde9c3d72c693, type: 3}
       propertyPath: m_LocalScale.y
       value: 1

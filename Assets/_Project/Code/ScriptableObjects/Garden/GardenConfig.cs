@@ -1,4 +1,4 @@
-using Project.Services;
+using Project.Game;
 using UnityEngine;
 
 namespace Project.ScriptableObjects
@@ -7,8 +7,9 @@ namespace Project.ScriptableObjects
     public class GardenConfig : ScriptableObject
     {
         [SerializeField] private string _animationName;
-        [field: SerializeField] public Material Material { get; private set; }
-        [field: SerializeField] public ResourceType ResourceType { get; private set; }
         public int InteractAnimation => Animator.StringToHash(_animationName);
+        [field: SerializeField] public Material CellMaterial { get; private set; }
+        [field: SerializeField] public Material ResourceMaterial { get; private set; }
+        [field: SerializeField] public ResourceType ResourceType { get; private set; }
     }
 }

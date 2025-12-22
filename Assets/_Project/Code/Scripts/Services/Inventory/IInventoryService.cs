@@ -1,9 +1,14 @@
+using System;
+using Project.Game;
+
 namespace Project.Services
 {
     public interface IInventoryService
     {
-        void SetResourceCount(ResourceType type, int value = 1);
+        event Action<ResourceType, int> InventoryUpdated;
         void UpdateLevel();
-        bool CanAddResource();
+        void Reset();
+        bool TryReserve(int amount = 1);
+        void Commit(ResourceType configResourceType, int amount);
     }
 }

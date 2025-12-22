@@ -8,8 +8,9 @@ namespace Project.Game
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private GardenItemConfig _config;
-        public Transform Transform => transform;
+        private IResourceItem _resourceItem;
 
+        public Transform Transform => transform;
         public bool CanMow { get; private set; }
 
         private void OnDestroy()
@@ -23,16 +24,29 @@ namespace Project.Game
             CanMow = true;
         }
 
-        public void Mow()
+        public void Mow(Material resourceMaterial, out IResourceItem resourceItem)
         {
             CanMow = false;
             
+            _resourceItem = Instantiate(_config.ResourceItemPrefab);
+            _resourceItem.Initialize(transform.position, resourceMaterial);
+
             transform.DOScale(_config.EndMowValue, _config.EndMowDuration)
                 .SetEase(_config.CurveConfig.InBounceEase)
-                .OnComplete(Grow);
+                .OnComplete(()=> _resourceItem.Show());
+            
+            _resourceItem.Collected += OnResourceCollected;
+            
+            resourceItem = _resourceItem;
         }
 
-        private void Grow()
+        private void OnResourceCollected()
+        {
+            Grow();
+            _resourceItem = null;
+        }
+
+        public void Grow()
         {
             transform.DOScale(Vector3.one, _config.EndGrowDuration)
                 .SetDelay(_config.DelayGrowValue)

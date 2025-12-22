@@ -8,6 +8,7 @@ namespace Project.Services
     {
         event Action Mowed;
         public Transform Transform { get; }
+        public Transform BodyTransform { get; }
         void SetMow(int animationID, bool isActive);
     }
 }

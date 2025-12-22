@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d337e1a3ac094e5f86b846f366ff170c, type: 3}
   m_Name: GardenItemConfig
   m_EditorClassIdentifier: 
+  <ResourceItemPrefab>k__BackingField: {fileID: 1848833139017815409, guid: 598d27178ec39ac4291ee47e8281fbac, type: 3}
   <EndMowValue>k__BackingField: {x: 1, y: 0.1, z: 1}
   <EndMowDuration>k__BackingField: 0.3
-  <EndGrowDuration>k__BackingField: 2
-  <DelayGrowValue>k__BackingField: 10
+  <EndGrowDuration>k__BackingField: 1
+  <DelayGrowValue>k__BackingField: 0.5
   <CurveConfig>k__BackingField: {fileID: 11400000, guid: 87ccaf01a5da9bf40b514cca241df80e, type: 2}

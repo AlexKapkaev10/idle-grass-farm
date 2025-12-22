@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Project.ScriptableObjects;
 using Project.Services;
 using UnityEngine;
@@ -10,6 +13,7 @@ namespace Project.Game
         private readonly IPlayerService _playerService;
         private readonly IAbilityService _abilityService;
         private readonly IInventoryService _inventoryService;
+        private List<IResourceItem> _resourceItems = new ();
 
         private IGardenItem[] _items;
         private GardenConfig _config;
@@ -31,18 +35,21 @@ namespace Project.Game
             _items = items;
             foreach (var item in _items)
             {
-                item.Initialize(_config.Material);
+                item.Initialize(_config.CellMaterial);
             }
         }
 
         public void Enter()
         {
+            CollectOld();
             StartMow();
         }
 
         public void Exit()
         {
             EndMow();
+
+            _inventoryService.Reset();
         }
 
         private void StartMow()
@@ -59,6 +66,28 @@ namespace Project.Game
                 _playerService.SetMow(_config.InteractAnimation, true);
                 break;
             }
+        }
+
+        private void CollectOld()
+        {
+            var playerPosition = _playerService.Transform.position;
+            
+            var sortedItems = _resourceItems
+                .OrderBy(i => (i.Transform.position - playerPosition).sqrMagnitude)
+                .ToList();
+
+            foreach (var item in sortedItems.ToList())
+            {
+                if (!_inventoryService.TryReserve())
+                {
+                    break;
+                }
+                
+                SendResource(item);
+                sortedItems.Remove(item);
+            }
+            
+            _resourceItems = sortedItems;
         }
 
         private void EndMow()
@@ -81,20 +110,41 @@ namespace Project.Game
                     continue;
                 }
 
-                item.Mow();
-                if (!_inventoryService.CanAddResource())
-                {
-                    continue;
-                }
+                item.Mow(_config.ResourceMaterial, out var resourceItem);
                 
-                _inventoryService.SetResourceCount(_config.ResourceType);
+                if (_inventoryService.TryReserve())
+                {
+                    SendResource(resourceItem, 1.0f);
+                }
+                else
+                {
+                    _resourceItems.Add(resourceItem);
+                }
             }
+        }
+
+        private void SendResource(IResourceItem item, float delay = 0.0f)
+        {
+            item.MoveToTarget(_playerService.Transform, delay, CollectResource);
+        }
+
+        private void CollectResource(int amount)
+        {
+            _inventoryService.Commit(_config.ResourceType, amount);
         }
 
         private bool HasDistanceToMow(IGardenItem item)
         {
-            return Vector3.Distance(_playerService.Transform.position, item.Transform.position) 
-                   < _abilityService.MowRange;
+            Vector3 toTarget = item.Transform.position - _playerService.BodyTransform.position;
+            toTarget.y = 0f;
+
+            return toTarget.magnitude <= _abilityService.MowRange &&
+                   Vector3.Dot(_playerService.BodyTransform.forward, toTarget.normalized) > 0f;
+        }
+
+        void IDisposable.Dispose()
+        {
+            _resourceItems.Clear();
         }
     }
 }

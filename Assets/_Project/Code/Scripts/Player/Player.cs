@@ -9,6 +9,7 @@ namespace Project.Game
         [field: SerializeField] public Transform GroundTransform { get; private set; }
         [field: SerializeField] public Transform ToolParent { get; private set; }
         [field: SerializeField] public Transform ToolRangeTransform { get; private set; }
+        [field: SerializeField] public Transform BodyTransform { get; private set; }
         public Transform Transform => transform;
     }
 }

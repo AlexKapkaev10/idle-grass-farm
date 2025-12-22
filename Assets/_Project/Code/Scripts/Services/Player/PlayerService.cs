@@ -23,6 +23,7 @@ namespace Project.Services
 
         public event Action Mowed;
         public Transform Transform => _player.Transform;
+        public Transform BodyTransform => _player.BodyTransform;
 
         public PlayerService(IInputService inputService, 
             ICameraService cameraService, 
@@ -41,7 +42,7 @@ namespace Project.Services
             
             _movement = _player.Movement;
             _animatorComponent = _player.AnimatorComponent;
-            _cameraService.SetTarget(_player.Transform);
+            _cameraService.SetTarget(_player.BodyTransform);
             _player.ToolRangeTransform.gameObject.SetActive(false);
             
             _searchModel = new SearchModel(_player.GroundTransform, _config.SearchModelConfig);
@@ -52,9 +53,7 @@ namespace Project.Services
 
         public void SetMow(int animationID, bool isActive)
         {
-            var range = _abilityService.MowRange;
-            _player.ToolRangeTransform.localScale = new Vector3(range, range, range);
-            _player.ToolRangeTransform.gameObject.SetActive(isActive);
+            DisplayToolRange(isActive);
             SetAnimationBool(animationID, isActive);
             
             SetTool(isActive);
@@ -110,6 +109,17 @@ namespace Project.Services
                 _tool?.Destroy();
                 _tool = null;
             }
+        }
+
+        private void DisplayToolRange(bool isActive)
+        {
+            if (isActive)
+            {
+                var range = _abilityService.MowRange;
+                _player.ToolRangeTransform.localScale = new Vector3(range, range, range);
+            }
+
+            _player.ToolRangeTransform.gameObject.SetActive(isActive);
         }
     }
 }
