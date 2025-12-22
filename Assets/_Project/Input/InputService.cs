@@ -3,13 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Project.Input
 {
-    public interface IInputService
-    {
-        void SwitchMap(InputMapType type);
-        Vector3 MoveDirection { get; }
-    }
-    
-    public class InputService : IInputService
+    public sealed class InputService : IInputService
     {
         private readonly InputActions _inputActions;
         public Vector3 MoveDirection { get; private set; }

@@ -3,12 +3,7 @@ using UnityEngine;
 
 namespace Project.UI.MVP
 {
-    public interface ILoaderPresenter : IPresenter
-    {
-        void UpdateSlider(float sliderValue);
-    }
-    
-    public class LoaderPresenter : ILoaderPresenter
+    public sealed class LoaderPresenter : ILoaderPresenter
     {
         private readonly LoaderPresenterConfig _config;
 

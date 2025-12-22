@@ -5,12 +5,7 @@ using UnityEngine;
 
 namespace Project.Game
 {
-    public interface ITool
-    {
-        void Destroy();
-    }
-
-    public class Tool : MonoBehaviour, ITool
+    public sealed class Tool : MonoBehaviour, ITool
     {
         [SerializeField] private ToolConfig _config;
         

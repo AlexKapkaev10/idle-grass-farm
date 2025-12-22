@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Project.UI.Custom
 {
-    public class CustomSlider : MonoBehaviour
+    public sealed class CustomSlider : MonoBehaviour
     {
         [SerializeField] private Image _imageFront;
         [SerializeField] private Image _imageBack;

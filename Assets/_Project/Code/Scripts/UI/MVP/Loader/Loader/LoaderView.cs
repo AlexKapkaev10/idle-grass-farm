@@ -9,7 +9,7 @@ namespace Project.UI.MVP
         CustomSlider SliderProgress { get; }
     }
     
-    public class LoaderView : MonoBehaviour, ILoaderView
+    public sealed class LoaderView : MonoBehaviour, ILoaderView
     {
         [SerializeField] private CanvasGroup _canvasGroup;
         [field: SerializeField] public CustomSlider SliderProgress { get; private set; }

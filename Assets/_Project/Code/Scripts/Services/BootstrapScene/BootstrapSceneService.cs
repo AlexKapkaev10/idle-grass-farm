@@ -2,7 +2,7 @@ using Project.UI.MVP;
 
 namespace Project.Services
 {
-    public class BootstrapSceneService : IBootstrapSceneService
+    public sealed class BootstrapSceneService : IBootstrapSceneService
     {
         private readonly ISceneLoadService _sceneLoadService;
         private readonly ILoaderPresenter _loaderPresenter;

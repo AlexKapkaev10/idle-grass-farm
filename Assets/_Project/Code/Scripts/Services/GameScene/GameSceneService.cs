@@ -11,7 +11,7 @@ namespace Project.Services
         
     }
     
-    public class GameSceneService : IGameSceneService
+    public sealed class GameSceneService : IGameSceneService
     {
         private readonly ILoaderPresenter _loaderPresenter;
         private readonly IInputService _inputService;

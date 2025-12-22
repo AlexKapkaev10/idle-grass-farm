@@ -9,7 +9,7 @@ namespace Project.UI.MVP
         
     }
     
-    public class JoystickPresenter : IJoystickPresenter
+    public sealed class JoystickPresenter : IJoystickPresenter
     {
         private readonly JoystickPresenterConfig _config;
         

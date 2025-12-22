@@ -3,11 +3,12 @@ using Project.Game;
 using Project.Input;
 using Project.ScriptableObjects;
 using UnityEngine;
+using VContainer.Unity;
 using Object = UnityEngine.Object;
 
 namespace Project.Services
 {
-    public class PlayerService : IPlayerService
+    public sealed class PlayerService : IPlayerService
     {
         private readonly IInputService _inputService;
         private readonly ICameraService _cameraService;
@@ -49,50 +50,14 @@ namespace Project.Services
             _animatorComponent.EventsReceiver.Mowed += OnMow;
         }
 
-        public void SetAnimationBool(int id, bool value)
-        {
-            _animatorComponent.SetBool(id, value);
-        }
-
-        public void SetTool(bool isActive)
-        {
-            if (isActive)
-            {
-                if (_tool == null)
-                {
-                    _tool = Object.Instantiate(_config.ToolPrefab, _player.ToolParent);
-                }
-            }
-            else
-            {
-                _tool?.Destroy();
-                _tool = null;
-            }
-        }
-
         public void SetMow(int animationID, bool isActive)
         {
             var range = _abilityService.MowRange;
             _player.ToolRangeTransform.localScale = new Vector3(range, range, range);
             _player.ToolRangeTransform.gameObject.SetActive(isActive);
             SetAnimationBool(animationID, isActive);
+            
             SetTool(isActive);
-        }
-
-        private void OnMow()
-        {
-            Mowed?.Invoke();
-        }
-
-        public void Tick()
-        {
-            _movement.Move(_inputService.MoveDirection, _config.MoveSpeed);
-            _movement.UpdateRotation(_inputService.MoveDirection, _config.RotateSpeed);
-        }
-
-        public void FixedTick()
-        {
-            _searchModel.Process();
         }
 
         public void Dispose()
@@ -103,9 +68,48 @@ namespace Project.Services
             _searchModel?.Dispose();
         }
 
+        void ITickable.Tick()
+        {
+            _movement.Move(_inputService.MoveDirection, _config.MoveSpeed);
+            _movement.UpdateRotation(_inputService.MoveDirection, _config.RotateSpeed);
+        }
+
+        void IFixedTickable.FixedTick()
+        {
+            _searchModel.Process();
+        }
+
         private void OnRun(bool isRunning)
         {
             SetAnimationBool(_config.IsRun, isRunning);
+        }
+
+        private void OnMow()
+        {
+            Mowed?.Invoke();
+        }
+
+        private void SetAnimationBool(int id, bool value)
+        {
+            _animatorComponent.SetBool(id, value);
+        }
+
+        private void SetTool(bool isActive)
+        {
+            if (isActive)
+            {
+                if (_tool != null)
+                {
+                    return;
+                }
+                
+                _tool = Object.Instantiate(_config.ToolPrefab, _player.ToolParent);
+            }
+            else
+            {
+                _tool?.Destroy();
+                _tool = null;
+            }
         }
     }
 }

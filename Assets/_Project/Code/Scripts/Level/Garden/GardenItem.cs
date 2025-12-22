@@ -4,15 +4,7 @@ using UnityEngine;
 
 namespace Project.Game
 {
-    public interface IGardenItem
-    {
-        bool CanMow { get; }
-        Transform Transform { get; }
-        void Initialize(Material material);
-        void Mow();
-    }
-    
-    public class GardenItem : MonoBehaviour, IGardenItem
+    public sealed class GardenItem : MonoBehaviour, IGardenItem
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private GardenItemConfig _config;

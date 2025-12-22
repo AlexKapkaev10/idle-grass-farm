@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace Project.Core
 {
-    public class GameScope : LifetimeScope
+    public sealed class GameScope : LifetimeScope
     {
         [SerializeField] private GameSceneServiceConfig _gameSceneServiceConfig;
         [SerializeField] private PlayerServiceConfig _playerServiceConfig;
@@ -18,6 +18,13 @@ namespace Project.Core
         [SerializeField] private InventoryServiceConfig _inventoryServiceConfig;
         
         protected override void Configure(IContainerBuilder builder)
+        {
+            RegisterServices(builder);
+            RegisterMVP(builder);
+            RegisterMVC(builder);
+        }
+
+        private void RegisterServices(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<GameSceneService>(Lifetime.Scoped)
                 .As<IGameSceneService>()
@@ -38,7 +45,16 @@ namespace Project.Core
             builder.Register<InventoryService>(Lifetime.Scoped)
                 .As<IInventoryService>()
                 .WithParameter(_inventoryServiceConfig);
+        }
 
+        private static void RegisterMVC(IContainerBuilder builder)
+        {
+            builder.Register<GardenController>(Lifetime.Transient)
+                .As<IGardenController>();
+        }
+
+        private void RegisterMVP(IContainerBuilder builder)
+        {
             builder.Register<JoystickPresenter>(Lifetime.Scoped)
                 .As<IJoystickPresenter>()
                 .WithParameter(_joystickPresenterConfig);

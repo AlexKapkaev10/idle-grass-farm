@@ -1,27 +1,24 @@
 using Project.ScriptableObjects;
+using Unity.Cinemachine;
 using UnityEngine;
 using VContainer;
 
 namespace Project.Services
 {
-    public interface ICameraService
+    public sealed class CameraService : ICameraService
     {
-        void SetTarget(Transform target);
-    }
-    
-    public class CameraService : ICameraService
-    {
-        private readonly ICameraHandler _handler;
+        private readonly CinemachineCamera _cinemachineCamera;
 
         [Inject]
         public CameraService(CameraServiceConfig config)
         {
-            _handler = Object.Instantiate(config.CameraPrefab, null);
+            Object.Instantiate(config.CinemachineBrainPrefab);
+            _cinemachineCamera = Object.Instantiate(config.CinemachineCameraPrefab);
         }
 
         public void SetTarget(Transform target)
         {
-            _handler.SetTarget(target);
+            _cinemachineCamera.Follow = target;
         }
     }
 }

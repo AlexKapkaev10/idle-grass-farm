@@ -3,29 +3,22 @@ using VContainer;
 
 namespace Project.Services
 {
-    public interface IInventoryService
-    {
-        void SetResourceCount(ResourceType type, int value);
-        bool CanAddResource();
-    }
-    
-    public class InventoryService : IInventoryService
+    public sealed class InventoryService : IInventoryService
     {
         private readonly InventoryServiceConfig _config;
+        
         private int _greenResourceCount;
         private int _yellowResourceCount;
-
         private int _level;
 
         [Inject]
         public InventoryService(InventoryServiceConfig config)
         {
             _config = config;
-            
             _level = 1;
         }
 
-        public void SetResourceCount(ResourceType type, int value)
+        public void SetResourceCount(ResourceType type, int value = 1)
         {
             switch (type)
             {
@@ -36,6 +29,11 @@ namespace Project.Services
                     _yellowResourceCount += value;
                     break;
             }
+        }
+
+        public void UpdateLevel()
+        {
+            _level++;
         }
 
         public bool CanAddResource()
