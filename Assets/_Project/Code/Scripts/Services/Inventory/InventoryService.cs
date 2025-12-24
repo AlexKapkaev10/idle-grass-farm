@@ -12,7 +12,8 @@ namespace Project.Services
 
         private int _greenResourceCount;
         private int _yellowResourceCount;
-        private int _reservedCount;
+        private int _reservedGreenCount;
+        private int _reservedYellowCount;
         private int _level;
 
         public event Action<ResourceType, int> InventoryUpdated;
@@ -24,22 +25,70 @@ namespace Project.Services
             _level = 1;
         }
 
-        public void Commit(ResourceType type, int amount = 1)
+        public void Commit(ResourceType type)
         {
-            _reservedCount -= amount;
+            int committedAmount = 0;
 
             switch (type)
             {
                 case ResourceType.Green:
-                    _greenResourceCount += amount;
+                    committedAmount = _reservedGreenCount;
+                    _greenResourceCount += committedAmount;
+                    _reservedGreenCount = 0;
+                    break;
+
+                case ResourceType.Yellow:
+                    committedAmount = _reservedYellowCount;
+                    _yellowResourceCount += committedAmount;
+                    _reservedYellowCount = 0;
+                    break;
+            }
+
+            if (committedAmount <= 0)
+            {
+                return;
+            }
+
+            InventoryUpdated?.Invoke(type,
+                type == ResourceType.Green ? _greenResourceCount : _yellowResourceCount
+            );
+        }
+
+        public int GetResourceAmount(ResourceType resourceType)
+        {
+            return resourceType == ResourceType.Green ? _greenResourceCount : _yellowResourceCount;
+        }
+
+        public int GetCapacity()
+        {
+            return _config.GetCapacityByLevel(_level);
+        }
+
+        public void SoldResource(ResourceType type, int amount = 1)
+        {
+            switch (type)
+            {
+                case ResourceType.Green:
+                    _greenResourceCount -= amount;
+                    if (_greenResourceCount <= 0)
+                    {
+                        _greenResourceCount = 0;
+                    }
                     
                     break;
                 case ResourceType.Yellow:
-                    _yellowResourceCount += amount;
+                    _yellowResourceCount -= amount;
+                    if (_yellowResourceCount <= 0)
+                    {
+                        _yellowResourceCount = 0;
+                    }
+                    
                     break;
             }
             
-            InventoryUpdated?.Invoke(type, type == ResourceType.Green ? _greenResourceCount : _yellowResourceCount);
+            InventoryUpdated?.Invoke(type,
+                type == ResourceType.Green ? _greenResourceCount : _yellowResourceCount
+            );
         }
 
         public void UpdateLevel()
@@ -47,31 +96,43 @@ namespace Project.Services
             _level++;
         }
 
-        public bool TryReserve(int amount = 1)
+        public bool HasCommit(ResourceType type)
+        {
+            switch (type)
+            {
+                case ResourceType.Green:
+                    return _reservedGreenCount != 0;
+                case ResourceType.Yellow:
+                    return _reservedYellowCount != 0;
+            }
+            
+            return false;
+        }
+
+        public bool TryReserve(ResourceType type, int amount = 1)
         {
             if (!CanReserve(amount))
             {
                 return false;
             }
 
-            _reservedCount += amount;
+            switch (type)
+            {
+                case ResourceType.Green:
+                    _reservedGreenCount += amount;
+                    break;
+                case ResourceType.Yellow:
+                    _reservedYellowCount += amount;
+                    break;
+            }
+            
             return true;
-        }
-
-        public void Reset()
-        {
-            _greenResourceCount = 0;
-            _yellowResourceCount = 0;
-            _reservedCount = 0;
         }
 
         private bool CanReserve(int amount = 1)
         {
-            return _greenResourceCount
-                   + _yellowResourceCount
-                   + _reservedCount
-                   + amount
-                   <= _config.GetMaxAmountByLevel(_level);
+            return _greenResourceCount + _yellowResourceCount + _reservedGreenCount + _reservedYellowCount + amount
+                   <= _config.GetCapacityByLevel(_level);
         }
     }
 }

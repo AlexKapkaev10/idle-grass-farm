@@ -48,8 +48,6 @@ namespace Project.Game
         public void Exit()
         {
             EndMow();
-
-            _inventoryService.Reset();
         }
 
         private void StartMow()
@@ -78,7 +76,7 @@ namespace Project.Game
 
             foreach (var item in sortedItems.ToList())
             {
-                if (!_inventoryService.TryReserve())
+                if (!_inventoryService.TryReserve(_config.ResourceType))
                 {
                     break;
                 }
@@ -112,7 +110,7 @@ namespace Project.Game
 
                 item.Mow(_config.ResourceMaterial, out var resourceItem);
                 
-                if (_inventoryService.TryReserve())
+                if (_inventoryService.TryReserve(_config.ResourceType))
                 {
                     SendResource(resourceItem, 1.0f);
                 }
@@ -130,7 +128,12 @@ namespace Project.Game
 
         private void CollectResource(int amount)
         {
-            _inventoryService.Commit(_config.ResourceType, amount);
+            if (!_inventoryService.HasCommit(_config.ResourceType))
+            {
+                return;
+            }
+            
+            _inventoryService.Commit(_config.ResourceType);
         }
 
         private bool HasDistanceToMow(IGardenItem item)

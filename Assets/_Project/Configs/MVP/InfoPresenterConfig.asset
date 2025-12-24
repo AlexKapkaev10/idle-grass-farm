@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4110b964991843b0b03039ab6f4c6688, type: 3}
-  m_Name: InventoryServiceConfig
+  m_Script: {fileID: 11500000, guid: 035d502d2452479b8fa3892ba81aad85, type: 3}
+  m_Name: InfoPresenterConfig
   m_EditorClassIdentifier: 
-  _resourceDates:
-  - Level: 1
-    Capacity: 10
-  - Level: 2
-    Capacity: 15
+  <InfoViewPrefab>k__BackingField: {fileID: 7873889930465636661, guid: b33121d67a849a64684c7248f0e09ea4, type: 3}

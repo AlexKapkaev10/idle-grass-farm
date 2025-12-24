@@ -16,17 +16,20 @@ namespace Project.Services
         private readonly ILoaderPresenter _loaderPresenter;
         private readonly IInputService _inputService;
         private readonly IJoystickPresenter _joystickPresenter;
+        private readonly IInfoPresenter _infoPresenter;
         private readonly GameSceneServiceConfig _config;
 
         [Inject]
         public GameSceneService(IInputService inputService, 
             ILoaderPresenter loaderPresenter,
             IJoystickPresenter joystickPresenter,
+            IInfoPresenter infoPresenter,
             GameSceneServiceConfig config)
         {
             _inputService = inputService;
             _loaderPresenter = loaderPresenter;
             _joystickPresenter = joystickPresenter;
+            _infoPresenter = infoPresenter;
             _config = config;
         }
 
@@ -39,6 +42,8 @@ namespace Project.Services
             {
                 _joystickPresenter.SetActiveView(true);
             }
+            
+            _infoPresenter.SetActiveView(true);
         }
     }
 }

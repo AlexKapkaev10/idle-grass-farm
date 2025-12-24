@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GradientGreen
+  m_Name: GradientYellow
   m_Shader: {fileID: 4800000, guid: 783439c315659124ab0c578cce24b056, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -91,9 +91,9 @@ Material:
     - _UseGammaCorrection: 1
     - _ZWrite: 1
     m_Colors:
-    - _BottomColor: {r: 0.14509805, g: 0.22352943, b: 0.08627451, a: 1}
+    - _BottomColor: {r: 0.8235295, g: 0.6392157, b: 0.11764707, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TopColor: {r: 0.4039216, g: 0.7254902, b: 0.41176474, a: 1}
+    - _TopColor: {r: 0.7803922, g: 0.80392164, b: 0.09019608, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

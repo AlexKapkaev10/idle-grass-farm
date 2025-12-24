@@ -8,13 +8,13 @@ namespace Project.ScriptableObjects
     {
         [SerializeField] public ResourceData[] _resourceDates;
 
-        public int GetMaxAmountByLevel(int level)
+        public int GetCapacityByLevel(int level)
         {
             foreach (var data in _resourceDates)
             {
                 if (level == data.Level)
                 {
-                    return data.MaxAmount;
+                    return data.Capacity;
                 }
             }
             
@@ -26,6 +26,6 @@ namespace Project.ScriptableObjects
     public struct ResourceData
     {
         public int Level;
-        public int MaxAmount;
+        public int Capacity;
     }
 }

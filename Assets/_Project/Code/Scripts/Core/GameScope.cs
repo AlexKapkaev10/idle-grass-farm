@@ -16,6 +16,7 @@ namespace Project.Core
         [SerializeField] private AbilityServiceConfig _abilityServiceConfig;
         [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
         [SerializeField] private InventoryServiceConfig _inventoryServiceConfig;
+        [SerializeField] private InfoPresenterConfig _infoPresenterConfig;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -58,6 +59,10 @@ namespace Project.Core
             builder.Register<JoystickPresenter>(Lifetime.Scoped)
                 .As<IJoystickPresenter>()
                 .WithParameter(_joystickPresenterConfig);
+            
+            builder.Register<InfoPresenter>(Lifetime.Scoped)
+                .As<IInfoPresenter>()
+                .WithParameter(_infoPresenterConfig);
         }
     }
 }
