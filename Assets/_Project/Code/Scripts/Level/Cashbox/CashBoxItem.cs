@@ -16,8 +16,8 @@ namespace Project.Game
 
         public void Enter()
         {
-            _inventoryService.SoldResource(ResourceType.Green);
-            _inventoryService.SoldResource(ResourceType.Yellow);
+            _inventoryService.TrySold(ResourceType.First);
+            _inventoryService.TrySold(ResourceType.Second);
         }
 
         public void Exit()

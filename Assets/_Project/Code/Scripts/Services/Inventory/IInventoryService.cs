@@ -7,11 +7,11 @@ namespace Project.Services
     {
         event Action<ResourceType, int> InventoryUpdated;
         void UpdateLevel();
-        bool HasCommit(ResourceType resourceType);
-        bool TryReserve(ResourceType type, int amount = 1);
         void Commit(ResourceType configResourceType);
         int GetResourceAmount(ResourceType resourceType);
         int GetCapacity();
-        void SoldResource(ResourceType type, int amount = 1);
+        bool HasCommit(ResourceType resourceType);
+        bool TryReserve(ResourceType type, int amount = 1);
+        bool TrySold(ResourceType type, int amount = 1);
     }
 }

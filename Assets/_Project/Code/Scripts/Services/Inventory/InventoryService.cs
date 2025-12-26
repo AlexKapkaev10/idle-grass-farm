@@ -1,26 +1,27 @@
 using System;
 using Project.Game;
 using Project.ScriptableObjects;
-using UnityEngine;
 using VContainer;
 
 namespace Project.Services
 {
     public sealed class InventoryService : IInventoryService
     {
+        private readonly IBankService _bankService;
         private readonly InventoryServiceConfig _config;
 
-        private int _greenResourceCount;
-        private int _yellowResourceCount;
-        private int _reservedGreenCount;
-        private int _reservedYellowCount;
+        private int _firstResourceCount;
+        private int _secondResourceCount;
+        private int _reservedFirstCount;
+        private int _reservedSecondCount;
         private int _level;
 
         public event Action<ResourceType, int> InventoryUpdated;
 
         [Inject]
-        public InventoryService(InventoryServiceConfig config)
+        public InventoryService(IBankService bankService, InventoryServiceConfig config)
         {
+            _bankService = bankService;
             _config = config;
             _level = 1;
         }
@@ -31,16 +32,16 @@ namespace Project.Services
 
             switch (type)
             {
-                case ResourceType.Green:
-                    committedAmount = _reservedGreenCount;
-                    _greenResourceCount += committedAmount;
-                    _reservedGreenCount = 0;
+                case ResourceType.First:
+                    committedAmount = _reservedFirstCount;
+                    _firstResourceCount += committedAmount;
+                    _reservedFirstCount = 0;
                     break;
 
-                case ResourceType.Yellow:
-                    committedAmount = _reservedYellowCount;
-                    _yellowResourceCount += committedAmount;
-                    _reservedYellowCount = 0;
+                case ResourceType.Second:
+                    committedAmount = _reservedSecondCount;
+                    _secondResourceCount += committedAmount;
+                    _reservedSecondCount = 0;
                     break;
             }
 
@@ -50,13 +51,13 @@ namespace Project.Services
             }
 
             InventoryUpdated?.Invoke(type,
-                type == ResourceType.Green ? _greenResourceCount : _yellowResourceCount
+                type == ResourceType.First ? _firstResourceCount : _secondResourceCount
             );
         }
 
         public int GetResourceAmount(ResourceType resourceType)
         {
-            return resourceType == ResourceType.Green ? _greenResourceCount : _yellowResourceCount;
+            return resourceType == ResourceType.First ? _firstResourceCount : _secondResourceCount;
         }
 
         public int GetCapacity()
@@ -64,31 +65,30 @@ namespace Project.Services
             return _config.GetCapacityByLevel(_level);
         }
 
-        public void SoldResource(ResourceType type, int amount = 1)
+        public bool TrySold(ResourceType type, int amount = 1)
         {
+            if (!CanSold(type, amount))
+            {
+                return false;
+            }
+            
             switch (type)
             {
-                case ResourceType.Green:
-                    _greenResourceCount -= amount;
-                    if (_greenResourceCount <= 0)
-                    {
-                        _greenResourceCount = 0;
-                    }
-                    
+                case ResourceType.First:
+                    _firstResourceCount -= amount;
                     break;
-                case ResourceType.Yellow:
-                    _yellowResourceCount -= amount;
-                    if (_yellowResourceCount <= 0)
-                    {
-                        _yellowResourceCount = 0;
-                    }
-                    
+                case ResourceType.Second:
+                    _secondResourceCount -= amount;
                     break;
             }
             
+            _bankService.SetCurrencyAmount(type, 10);
+            
             InventoryUpdated?.Invoke(type,
-                type == ResourceType.Green ? _greenResourceCount : _yellowResourceCount
+                type == ResourceType.First ? _firstResourceCount : _secondResourceCount
             );
+            
+            return true;
         }
 
         public void UpdateLevel()
@@ -100,10 +100,10 @@ namespace Project.Services
         {
             switch (type)
             {
-                case ResourceType.Green:
-                    return _reservedGreenCount != 0;
-                case ResourceType.Yellow:
-                    return _reservedYellowCount != 0;
+                case ResourceType.First:
+                    return _reservedFirstCount != 0;
+                case ResourceType.Second:
+                    return _reservedSecondCount != 0;
             }
             
             return false;
@@ -118,11 +118,11 @@ namespace Project.Services
 
             switch (type)
             {
-                case ResourceType.Green:
-                    _reservedGreenCount += amount;
+                case ResourceType.First:
+                    _reservedFirstCount += amount;
                     break;
-                case ResourceType.Yellow:
-                    _reservedYellowCount += amount;
+                case ResourceType.Second:
+                    _reservedSecondCount += amount;
                     break;
             }
             
@@ -131,8 +131,21 @@ namespace Project.Services
 
         private bool CanReserve(int amount = 1)
         {
-            return _greenResourceCount + _yellowResourceCount + _reservedGreenCount + _reservedYellowCount + amount
+            return _firstResourceCount + _secondResourceCount + _reservedFirstCount + _reservedSecondCount + amount
                    <= _config.GetCapacityByLevel(_level);
+        }
+
+        private bool CanSold(ResourceType type, int amount = 1)
+        {
+            switch (type)
+            {
+                case ResourceType.First:
+                    return _firstResourceCount >= amount;
+                case ResourceType.Second:
+                    return _secondResourceCount >= amount;
+            }
+            
+            return false;
         }
     }
 }

@@ -46,6 +46,9 @@ namespace Project.Core
             builder.Register<InventoryService>(Lifetime.Scoped)
                 .As<IInventoryService>()
                 .WithParameter(_inventoryServiceConfig);
+
+            builder.Register<BankService>(Lifetime.Scoped)
+                .As<IBankService>();
         }
 
         private static void RegisterMVC(IContainerBuilder builder)
