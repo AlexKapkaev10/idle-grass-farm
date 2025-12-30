@@ -111,7 +111,7 @@ namespace Project.Services
 
         public bool TryReserve(ResourceType type, int amount = 1)
         {
-            if (!CanReserve(amount))
+            if (!CanReserve(type, amount))
             {
                 return false;
             }
@@ -129,10 +129,21 @@ namespace Project.Services
             return true;
         }
 
-        private bool CanReserve(int amount = 1)
+        private bool CanReserve(ResourceType type, int amount = 1)
         {
-            return _firstResourceCount + _secondResourceCount + _reservedFirstCount + _reservedSecondCount + amount
-                   <= _config.GetCapacityByLevel(_level);
+            switch (type)
+            {
+                case ResourceType.First:
+                    return _firstResourceCount 
+                        + _reservedFirstCount 
+                        + amount <= _config.GetCapacityByLevel(_level);
+                case ResourceType.Second:
+                    return _secondResourceCount
+                        + _reservedSecondCount 
+                        + amount <= _config.GetCapacityByLevel(_level);
+            }
+            
+            return false;
         }
 
         private bool CanSold(ResourceType type, int amount = 1)

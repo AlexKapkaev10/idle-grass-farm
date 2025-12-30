@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Project.ScriptableObjects;
 using Project.Services;
 using VContainer;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Project.Game
 {
@@ -14,86 +14,170 @@ namespace Project.Game
     {
         void Start();
     }
-    
+
     public class TradeService : ITradeService
     {
         private readonly ICashboxController _cashboxController;
         private readonly IInventoryService _inventoryService;
-        
         private readonly TradeServiceConfig _config;
-        private readonly CancellationTokenSource _cts = new ();
-        private readonly List<Customer> _customers = new ();
+
+        private readonly CancellationTokenSource _cts = new();
+
+        private readonly List<Customer> _customers = new();
 
         private Customer _firstCustomer;
         private bool _hasPlayer;
 
         [Inject]
-        public TradeService(ICashboxController cashboxController, 
-            IInventoryService inventoryService, 
+        public TradeService(
+            ICashboxController cashboxController,
+            IInventoryService inventoryService,
             TradeServiceConfig config)
         {
-            _config = config;
             _cashboxController = cashboxController;
             _inventoryService = inventoryService;
+            _config = config;
         }
 
         public void Start()
         {
             _cashboxController.PlayerEntered += OnPlayerEnter;
-            SpawnCustomersAsync().Forget();
+
+            RunSpawnLoop(_cts.Token).Forget();
         }
 
-        private void OnPlayerEnter(bool isEnter)
-        {
-            _hasPlayer = isEnter;
-
-            SoldResource();
-        }
-
-        private void SoldResource()
-        {
-            if (_firstCustomer && !_firstCustomer.IsMoving)
-            {
-                var isSold = _inventoryService.TrySold(ResourceType.First);
-
-                if (isSold)
-                {
-                    _firstCustomer.ReleasePoint();
-
-                    _firstCustomer.StartMove(_config.CustomerExitPosition, true);
-                    _customers.Remove(_firstCustomer);
-                    _firstCustomer = null;
-
-                    if (_customers.Count == 0)
-                    {
-                        SpawnCustomersAsync().Forget();
-                        return;
-                    }
-
-                    RebuildQueue();
-                    
-                    if (_hasPlayer)
-                    {
-                        SoldResource();
-                    }
-                }
-            }
-        }
-        
-        private void RebuildQueue()
+        public void Dispose()
         {
             if (_firstCustomer != null)
             {
                 _firstCustomer.Arrived -= OnFirstCustomerArrived;
                 _firstCustomer = null;
             }
-            
-            foreach (var customer in _customers)
+
+            _cashboxController.PlayerEntered -= OnPlayerEnter;
+
+            _cts.Cancel();
+            _cts.Dispose();
+        }
+
+        private void OnPlayerEnter(bool isEnter)
+        {
+            _hasPlayer = isEnter;
+
+            if (_hasPlayer)
             {
-                customer.ReleasePoint();
+                TrySellToFirstCustomer();
             }
+        }
+        
+        private async UniTaskVoid RunSpawnLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                var maxQueue = _cashboxController.QueuePointsCount;
+
+                if (maxQueue <= 0)
+                {
+                    await UniTask.Yield(token);
+                    continue;
+                }
+
+                if (_customers.Count >= maxQueue)
+                {
+                    await UniTask.WaitUntil(() => _customers.Count < maxQueue, cancellationToken: token);
+                    continue;
+                }
+
+                var delay = Random.Range(_config.SpawnDelayMin, _config.SpawnDelayMax);
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: token);
+
+                if (_customers.Count >= maxQueue)
+                {
+                    continue;
+                }
+
+                SpawnOneCustomer();
+            }
+        }
+
+        private void SpawnOneCustomer()
+        {
+            var point = _cashboxController.GetFreeQueuePoint();
+            if (point == null)
+            {
+                return;
+            }
+
+            var customer = Object.Instantiate(_config.CustomerPrefab);
+            customer.Initialize(point, _config.CustomerSpawnPosition);
+
+            _customers.Add(customer);
+
+            RebuildQueue();
+        }
+        
+        private void TrySellToFirstCustomer()
+        {
+            if (_firstCustomer == null)
+            {
+                return;
+            }
+
+            if (_firstCustomer.IsMoving)
+            {
+                return;
+            }
+
+            var isSold = _inventoryService.TrySold(_firstCustomer.GetWishfulType());
+            if (!isSold)
+            {
+                return;
+            }
+
+            var leavingCustomer = _firstCustomer;
+            leavingCustomer.Arrived -= OnFirstCustomerArrived;
+
+            leavingCustomer.ReleasePoint();
+            leavingCustomer.StartMove(_config.CustomerExitPosition, true);
+
+            _customers.Remove(leavingCustomer);
+            _firstCustomer = null;
+
+            RebuildQueue();
             
-            foreach (var customer in _customers)
+            if (_hasPlayer)
+            {
+                TrySellToFirstCustomer();
+            }
+        }
+
+        private void OnFirstCustomerArrived()
+        {
+            if (_hasPlayer)
+            {
+                TrySellToFirstCustomer();
+            }
+        }
+
+        private void RebuildQueue()
+        {
+            if (_cashboxController.QueuePoints == null)
+            {
+                return;
+            }
+
+            if (_firstCustomer != null)
+            {
+                _firstCustomer.Arrived -= OnFirstCustomerArrived;
+                _firstCustomer = null;
+            }
+
+            foreach (var c in _customers)
+            {
+                c.ReleasePoint();
+            }
+
+            foreach (var c in _customers)
             {
                 var point = _cashboxController.GetFreeQueuePoint();
                 if (point == null)
@@ -101,49 +185,13 @@ namespace Project.Game
                     break;
                 }
 
-                customer.SetPoint(point);
+                c.SetPoint(point);
 
                 if (point.IsPayPoint())
                 {
-                    _firstCustomer = customer;
+                    _firstCustomer = c;
                     _firstCustomer.Arrived += OnFirstCustomerArrived;
                 }
-            }
-        }
-
-        private void OnFirstCustomerArrived()
-        {
-            _firstCustomer.Arrived -= OnFirstCustomerArrived;
-
-            if (_hasPlayer)
-            {
-                SoldResource();
-            }
-        }
-
-        public void Dispose()
-        {
-            _cts.Cancel();
-            _cashboxController.PlayerEntered -= OnPlayerEnter;
-        }
-
-        private async UniTask SpawnCustomersAsync()
-        {
-            foreach (var point in _cashboxController.QueuePoints)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(_config.CustomerSpawnDelay), _cts.Token);
-                
-                var customer = Object.Instantiate(_config.CustomerPrefab);
-
-                if (point.IsPayPoint())
-                {
-                    _firstCustomer = customer;
-                    _firstCustomer.Arrived += OnFirstCustomerArrived;
-                }
-                
-                customer.Initialize(point, _config.CustomerSpawnPosition);
-                
-                _customers.Add(customer);
             }
         }
     }
