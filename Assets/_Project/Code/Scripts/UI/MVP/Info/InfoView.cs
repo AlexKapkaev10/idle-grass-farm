@@ -18,11 +18,10 @@ namespace Project.UI.MVP
         [SerializeField] private TMP_Text _textFirstCurrency;
         [SerializeField] private TMP_Text _textSecondCurrency;
         
-        [field: SerializeField] public CustomSlider GreenSlider { get; private set; }
-        [field: SerializeField] public CustomSlider YellowSlider { get; private set; }
-        
         private Tween _tweenFirst;
         private Tween _tweenSecond;
+        [field: SerializeField] public CustomSlider GreenSlider { get; private set; }
+        [field: SerializeField] public CustomSlider YellowSlider { get; private set; }
 
         private void OnDisable()
         {

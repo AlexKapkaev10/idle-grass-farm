@@ -10,14 +10,17 @@ namespace Project.Core
 {
     public sealed class GameScope : LifetimeScope
     {
+        [Header("Services")]
         [SerializeField] private GameSceneServiceConfig _gameSceneServiceConfig;
         [SerializeField] private PlayerServiceConfig _playerServiceConfig;
         [SerializeField] private CameraServiceConfig _cameraServiceConfig;
         [SerializeField] private AbilityServiceConfig _abilityServiceConfig;
-        [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
         [SerializeField] private InventoryServiceConfig _inventoryServiceConfig;
+        [SerializeField] private TradeServiceConfig _tradeServiceConfig;
+        [Header("Presenters")]
+        [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
         [SerializeField] private InfoPresenterConfig _infoPresenterConfig;
-        
+
         protected override void Configure(IContainerBuilder builder)
         {
             RegisterServices(builder);
@@ -49,12 +52,19 @@ namespace Project.Core
 
             builder.Register<BankService>(Lifetime.Scoped)
                 .As<IBankService>();
+            
+            builder.Register<TradeService>(Lifetime.Scoped)
+                .As<ITradeService>()
+                .WithParameter(_tradeServiceConfig);
         }
 
         private static void RegisterMVC(IContainerBuilder builder)
         {
             builder.Register<GardenController>(Lifetime.Transient)
                 .As<IGardenController>();
+            
+            builder.Register<CashboxController>(Lifetime.Scoped)
+                .As<ICashboxController>();
         }
 
         private void RegisterMVP(IContainerBuilder builder)

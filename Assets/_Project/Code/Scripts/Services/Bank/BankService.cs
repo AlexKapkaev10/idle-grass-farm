@@ -40,8 +40,6 @@ namespace Project.Services
                 ? _firstCurrency
                 : _secondCurrency;
             
-            Debug.Log("Set currency");
-            
             BankUpdated?.Invoke(new BankMessageData(resourceType, 
                 newAmount - amount,
                 newAmount));
