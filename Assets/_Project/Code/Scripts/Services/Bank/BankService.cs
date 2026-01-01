@@ -19,6 +19,11 @@ namespace Project.Services
             SetCurrencyAmount(ResourceType.Second, 10);
         }
 
+        public bool Has(ResourceType resourceType, int amount)
+        {
+            return GetCurrencyAmount(resourceType) >= amount;
+        }
+
         public int GetCurrencyAmount(ResourceType resourceType)
         {
             return resourceType == ResourceType.First ? _firstCurrency : _secondCurrency;

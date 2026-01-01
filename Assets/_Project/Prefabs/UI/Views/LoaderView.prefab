@@ -88,6 +88,10 @@ PrefabInstance:
       value: LoaderView
       objectReference: {fileID: 0}
     - target: {fileID: 2887962147986300939, guid: c6b275ee777235045bc196f18783fc69, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887962147986300939, guid: c6b275ee777235045bc196f18783fc69, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
@@ -207,8 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6515ca5203409a8bee261db6aae7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <SliderProgress>k__BackingField: {fileID: 2730431073752069806}
   _canvasGroup: {fileID: 6879901396109081004}
+  <SliderProgress>k__BackingField: {fileID: 2730431073752069806}
 --- !u!225 &6879901396109081004 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 7356883038927275637, guid: c6b275ee777235045bc196f18783fc69, type: 3}

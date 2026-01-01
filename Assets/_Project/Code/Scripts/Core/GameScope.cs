@@ -63,6 +63,9 @@ namespace Project.Core
             builder.Register<GardenController>(Lifetime.Transient)
                 .As<IGardenController>();
             
+            builder.Register<UpgradeController>(Lifetime.Transient)
+                .As<IUpgradeController>();
+            
             builder.Register<CashboxController>(Lifetime.Scoped)
                 .As<ICashboxController>();
         }

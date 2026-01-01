@@ -28,6 +28,7 @@ namespace Project.UI.MVP
             _config = config;
 
             _inventoryService.InventoryUpdated += OnInventoryUpdate;
+            _inventoryService.InventoryUpgraded += DisplayInventory;
             _bankService.BankUpdated += OnBankUpdated;
         }
 
@@ -61,22 +62,9 @@ namespace Project.UI.MVP
             {
                 _view = Object.Instantiate(_config.InfoViewPrefab);
                 
-                _view.GreenSlider.SetData(
-                    _inventoryService.GetResourceAmount(ResourceType.First), 
-                    _inventoryService.GetCapacity());
-                
-                _view.YellowSlider.SetData(
-                    _inventoryService.GetResourceAmount(ResourceType.Second), 
-                    _inventoryService.GetCapacity());
-                
-                _view.GreenSlider
-                    .UpdateText($"{_inventoryService.GetResourceAmount(ResourceType.First)}/{_inventoryService.GetCapacity()}");
-                
-                _view.YellowSlider
-                    .UpdateText($"{_inventoryService.GetResourceAmount(ResourceType.Second)}/{_inventoryService.GetCapacity()}");
-                
-                _view.SetCurrencyAmount(ResourceType.First, 0, _bankService.GetCurrencyAmount(ResourceType.First));
-                _view.SetCurrencyAmount(ResourceType.Second, 0, _bankService.GetCurrencyAmount(ResourceType.Second));
+                DisplayInventory();
+
+                DisplayBank();
             }
             else
             {
@@ -85,9 +73,34 @@ namespace Project.UI.MVP
             }
         }
 
+        private void DisplayInventory()
+        {
+            _view.GreenSlider.SetData(
+                _inventoryService.GetResourceAmount(ResourceType.First), 
+                _inventoryService.GetCapacity());
+                
+            _view.GreenSlider
+                .UpdateText($"{_inventoryService.GetResourceAmount(ResourceType.First)}/{_inventoryService.GetCapacity()}");
+
+            _view.YellowSlider.SetData(
+                _inventoryService.GetResourceAmount(ResourceType.Second), 
+                _inventoryService.GetCapacity());
+
+
+            _view.YellowSlider
+                .UpdateText($"{_inventoryService.GetResourceAmount(ResourceType.Second)}/{_inventoryService.GetCapacity()}");
+        }
+
+        private void DisplayBank()
+        {
+            _view.SetCurrencyAmount(ResourceType.First, 0, _bankService.GetCurrencyAmount(ResourceType.First));
+            _view.SetCurrencyAmount(ResourceType.Second, 0, _bankService.GetCurrencyAmount(ResourceType.Second));
+        }
+
         public void Dispose()
         {
             _inventoryService.InventoryUpdated -= OnInventoryUpdate;
+            _inventoryService.InventoryUpgraded -= DisplayInventory;
             _bankService.BankUpdated -= OnBankUpdated;
         }
     }

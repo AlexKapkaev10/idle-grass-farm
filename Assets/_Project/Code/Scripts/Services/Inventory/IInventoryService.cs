@@ -5,8 +5,10 @@ namespace Project.Services
 {
     public interface IInventoryService
     {
+        int Level { get; }
         event Action<ResourceType, int> InventoryUpdated;
-        void UpdateLevel();
+        event Action InventoryUpgraded;
+        void UpgradeLevel();
         void Commit(ResourceType configResourceType);
         int GetResourceAmount(ResourceType resourceType);
         int GetCapacity();

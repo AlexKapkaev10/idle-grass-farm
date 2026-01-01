@@ -14,16 +14,17 @@ namespace Project.Services
         private int _secondResourceCount;
         private int _reservedFirstCount;
         private int _reservedSecondCount;
-        private int _level;
+        public int Level { get; private set; }
 
         public event Action<ResourceType, int> InventoryUpdated;
+        public event Action InventoryUpgraded;
 
         [Inject]
         public InventoryService(IBankService bankService, InventoryServiceConfig config)
         {
             _bankService = bankService;
             _config = config;
-            _level = 1;
+            Level = 1;
         }
 
         public void Commit(ResourceType type)
@@ -62,7 +63,7 @@ namespace Project.Services
 
         public int GetCapacity()
         {
-            return _config.GetCapacityByLevel(_level);
+            return _config.GetCapacityByLevel(Level);
         }
 
         public bool TrySold(ResourceType type, int amount = 1)
@@ -91,9 +92,10 @@ namespace Project.Services
             return true;
         }
 
-        public void UpdateLevel()
+        public void UpgradeLevel()
         {
-            _level++;
+            Level++;
+            InventoryUpgraded?.Invoke();
         }
 
         public bool HasCommit(ResourceType type)
@@ -136,11 +138,11 @@ namespace Project.Services
                 case ResourceType.First:
                     return _firstResourceCount 
                         + _reservedFirstCount 
-                        + amount <= _config.GetCapacityByLevel(_level);
+                        + amount <= _config.GetCapacityByLevel(Level);
                 case ResourceType.Second:
                     return _secondResourceCount
                         + _reservedSecondCount 
-                        + amount <= _config.GetCapacityByLevel(_level);
+                        + amount <= _config.GetCapacityByLevel(Level);
             }
             
             return false;

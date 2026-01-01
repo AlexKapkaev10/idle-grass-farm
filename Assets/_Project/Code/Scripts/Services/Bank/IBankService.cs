@@ -6,6 +6,7 @@ namespace Project.Services
     public interface IBankService
     {
         event Action<BankMessageData> BankUpdated;
+        bool Has(ResourceType resourceType, int amount);
         int GetCurrencyAmount(ResourceType resourceType);
         void SetCurrencyAmount(ResourceType resourceType, int amount);
     }
