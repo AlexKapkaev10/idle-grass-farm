@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Material>k__BackingField: {fileID: 2100000, guid: 76653c99d935f8148bc60ee13359c18d, type: 2}
   <Type>k__BackingField: 0
-  <Recipe>k__BackingField:
+  <Recipes>k__BackingField:
   - Level: 2
     FirstCurrencyAmount: 10
     SecondCurrencyAmount: 10
+  - Level: 3
+    FirstCurrencyAmount: 20
+    SecondCurrencyAmount: 20

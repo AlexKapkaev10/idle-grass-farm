@@ -1,12 +1,9 @@
-using Project.ScriptableObjects;
-
 namespace Project.Game
 {
     public interface IAbilityService
     {
-        float MowRange { get; }
-        int GetNextLevel(AbilityType type);
+        float GetMowRange();
         void UpdateLevel(AbilityType type);
-        void TryUpgrade(AbilityType type, UpgradeRecipe recipe);
+        bool HasUpgrade(AbilityType type);
     }
 }

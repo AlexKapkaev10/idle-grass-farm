@@ -115,7 +115,7 @@ namespace Project.Services
         {
             if (isActive)
             {
-                var range = _abilityService.MowRange;
+                var range = _abilityService.GetMowRange();
                 _player.ToolRangeTransform.localScale = new Vector3(range, range, range);
             }
 

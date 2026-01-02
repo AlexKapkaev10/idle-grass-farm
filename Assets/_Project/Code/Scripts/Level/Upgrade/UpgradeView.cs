@@ -1,5 +1,6 @@
 using Project.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 
 namespace Project.Game
@@ -8,6 +9,7 @@ namespace Project.Game
     {
         [SerializeField] private UpgradeConfig _config;
         [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private UpgradeViewItem _viewItem;
         
         private IUpgradeController _controller;
 
@@ -15,7 +17,7 @@ namespace Project.Game
         private void Construct(IUpgradeController controller)
         {
             _controller = controller;
-            _controller.Initialize(_config);
+            _controller.Initialize(_viewItem, _config);
             _meshRenderer.material = _config.Material;
         }
 

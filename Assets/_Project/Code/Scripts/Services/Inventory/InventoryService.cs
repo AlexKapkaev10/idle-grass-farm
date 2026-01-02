@@ -14,7 +14,8 @@ namespace Project.Services
         private int _secondResourceCount;
         private int _reservedFirstCount;
         private int _reservedSecondCount;
-        public int Level { get; private set; }
+        private int _level;
+        private int _capacity;
 
         public event Action<ResourceType, int> InventoryUpdated;
         public event Action InventoryUpgraded;
@@ -24,7 +25,6 @@ namespace Project.Services
         {
             _bankService = bankService;
             _config = config;
-            Level = 1;
         }
 
         public void Commit(ResourceType type)
@@ -56,6 +56,11 @@ namespace Project.Services
             );
         }
 
+        public int GetLevel()
+        {
+            return _level;
+        }
+
         public int GetResourceAmount(ResourceType resourceType)
         {
             return resourceType == ResourceType.First ? _firstResourceCount : _secondResourceCount;
@@ -63,7 +68,7 @@ namespace Project.Services
 
         public int GetCapacity()
         {
-            return _config.GetCapacityByLevel(Level);
+            return _capacity;
         }
 
         public bool TrySold(ResourceType type, int amount = 1)
@@ -92,9 +97,10 @@ namespace Project.Services
             return true;
         }
 
-        public void UpgradeLevel()
+        public void UpgradeLevel(float capacity)
         {
-            Level++;
+            _level++;
+            _capacity = (int)capacity;
             InventoryUpgraded?.Invoke();
         }
 
@@ -138,11 +144,11 @@ namespace Project.Services
                 case ResourceType.First:
                     return _firstResourceCount 
                         + _reservedFirstCount 
-                        + amount <= _config.GetCapacityByLevel(Level);
+                        + amount <= _capacity;
                 case ResourceType.Second:
                     return _secondResourceCount
                         + _reservedSecondCount 
-                        + amount <= _config.GetCapacityByLevel(Level);
+                        + amount <= _capacity;
             }
             
             return false;

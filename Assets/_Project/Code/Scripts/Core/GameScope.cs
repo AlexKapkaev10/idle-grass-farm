@@ -20,6 +20,7 @@ namespace Project.Core
         [Header("Presenters")]
         [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
         [SerializeField] private InfoPresenterConfig _infoPresenterConfig;
+        [SerializeField] private PopupPresenterConfig _popupPresenterConfig;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -53,6 +54,9 @@ namespace Project.Core
             builder.Register<BankService>(Lifetime.Scoped)
                 .As<IBankService>();
             
+            builder.Register<ToolService>(Lifetime.Scoped)
+                .As<IToolService>();
+            
             builder.Register<TradeService>(Lifetime.Scoped)
                 .As<ITradeService>()
                 .WithParameter(_tradeServiceConfig);
@@ -79,6 +83,10 @@ namespace Project.Core
             builder.Register<InfoPresenter>(Lifetime.Scoped)
                 .As<IInfoPresenter>()
                 .WithParameter(_infoPresenterConfig);
+
+            builder.Register<PopupPresenter>(Lifetime.Scoped)
+                .As<IPopupPresenter>()
+                .WithParameter(_popupPresenterConfig);
         }
     }
 }

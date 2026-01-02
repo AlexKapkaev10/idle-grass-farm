@@ -47,4 +47,14 @@ MonoBehaviour:
   parentReference:
     TypeName: 
   autoRun: 1
-  autoInjectGameObjects: []
+  autoInjectGameObjects:
+  - {fileID: 0}
+  _gameSceneServiceConfig: {fileID: 11400000, guid: 68a2d02a904f2794db1af2346d439cb5, type: 2}
+  _playerServiceConfig: {fileID: 11400000, guid: 2f1379cf3d366bb4a9be21c03fb6a6e4, type: 2}
+  _cameraServiceConfig: {fileID: 11400000, guid: 6ddd214773f6ee54e8caa7f38adc2391, type: 2}
+  _abilityServiceConfig: {fileID: 11400000, guid: a83a8879138a5e449be41d9f63372d9c, type: 2}
+  _inventoryServiceConfig: {fileID: 11400000, guid: fd83a9c63ceaa1f4dbb0454413290017, type: 2}
+  _tradeServiceConfig: {fileID: 11400000, guid: 90c2aea7b9751cf44bfc018c237dc6f3, type: 2}
+  _joystickPresenterConfig: {fileID: 11400000, guid: d52132b78ab5c834e98aa34470047e37, type: 2}
+  _infoPresenterConfig: {fileID: 11400000, guid: 07f50ccf58b17d84589f4026610b9301, type: 2}
+  _popupPresenterConfig: {fileID: 11400000, guid: 3e283e865147abf42863b955a2706e4c, type: 2}

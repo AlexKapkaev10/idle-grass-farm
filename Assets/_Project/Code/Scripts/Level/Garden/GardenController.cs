@@ -141,7 +141,7 @@ namespace Project.Game
             Vector3 toTarget = item.Transform.position - _playerService.BodyTransform.position;
             toTarget.y = 0f;
 
-            return toTarget.magnitude <= _abilityService.MowRange &&
+            return toTarget.magnitude <= _abilityService.GetMowRange() &&
                    Vector3.Dot(_playerService.BodyTransform.forward, toTarget.normalized) > 0f;
         }
 

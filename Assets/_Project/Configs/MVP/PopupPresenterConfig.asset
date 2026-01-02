@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4110b964991843b0b03039ab6f4c6688, type: 3}
-  m_Name: InventoryServiceConfig
+  m_Script: {fileID: 11500000, guid: 6cc7e5887e164d7889f59f8fa0767df6, type: 3}
+  m_Name: PopupPresenterConfig
   m_EditorClassIdentifier: 
-  _resourceDates:
-  - Level: 1
-    Capacity: 10
-  - Level: 2
-    Capacity: 15
-  - Level: 3
-    Capacity: 20
+  <ViewPrefab>k__BackingField: {fileID: 8267158905544203739, guid: 8fb7e03a108b09b45b1ffefebf97c823, type: 3}

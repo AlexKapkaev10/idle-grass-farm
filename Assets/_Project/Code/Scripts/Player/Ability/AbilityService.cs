@@ -8,59 +8,73 @@ namespace Project.Game
     {
         private readonly IBankService _bankService;
         private readonly IInventoryService _inventoryService;
+        private readonly IToolService _toolService;
         private readonly AbilityServiceConfig _config;
 
-        private int _toolLevel = 1;
-
-        public float MowRange { get; private set; }
-
         [Inject]
-        public AbilityService(IBankService bankService, IInventoryService inventoryService, AbilityServiceConfig config)
+        public AbilityService(IBankService bankService, 
+            IInventoryService inventoryService,
+            IToolService toolService,
+            AbilityServiceConfig config)
         {
             _bankService = bankService;
             _inventoryService = inventoryService;
+            _toolService = toolService;
             _config = config;
-
-            _toolLevel = _config.StartToolLevel;
-            SetMowRange(_config.GetToolRangeByLevel(_toolLevel));
+            
+            _toolService.UpgradeLevel(_config.GetRecipe(AbilityType.Tool, 
+                GetNextLevel(AbilityType.Tool)).Value);
+            
+            _inventoryService.UpgradeLevel(_config.GetRecipe(AbilityType.Inventory, 
+                GetNextLevel(AbilityType.Inventory)).Value);
         }
 
         public void UpdateLevel(AbilityType type)
         {
+            var recipe = _config.GetRecipe(type, GetNextLevel(type));
+            
+            _bankService.SetCurrencyAmount(ResourceType.First, -recipe.FirstCurrencyAmount);
+            _bankService.SetCurrencyAmount(ResourceType.Second, -recipe.SecondCurrencyAmount);
+            
             switch (type)
             {
                 case AbilityType.Tool:
-                    _toolLevel++;
-                    SetMowRange(_config.GetToolRangeByLevel(_toolLevel));
+                    _toolService.UpgradeLevel(recipe.Value);
                     break;
                 case AbilityType.Inventory:
-                    _inventoryService.UpgradeLevel();
+                    _inventoryService.UpgradeLevel(recipe.Value);
                     break;
             }
         }
 
-        public void TryUpgrade(AbilityType type, UpgradeRecipe recipe)
+        public bool HasUpgrade(AbilityType type)
         {
-            if (recipe != null)
+            var recipe = _config.GetRecipe(type, GetNextLevel(type));
+            
+            if (recipe == null)
             {
-                if (_bankService.Has(ResourceType.First, recipe.FirstCurrencyAmount) &&
-                    _bankService.Has(ResourceType.Second, recipe.SecondCurrencyAmount))
-                {
-                    _bankService.SetCurrencyAmount(ResourceType.First, -recipe.FirstCurrencyAmount);
-                    _bankService.SetCurrencyAmount(ResourceType.Second, -recipe.SecondCurrencyAmount);
-                    UpdateLevel(type);
-                }
+                return false;
             }
+
+            if (_bankService.Has(ResourceType.First, recipe.FirstCurrencyAmount) &&
+                _bankService.Has(ResourceType.Second, recipe.SecondCurrencyAmount))
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        public float GetMowRange()
+        {
+            return _toolService.GetMowRange();
         }
 
         public int GetNextLevel(AbilityType type)
         {
-            return type == AbilityType.Tool ? _toolLevel + 1 : _inventoryService.Level + 1;
-        }
-
-        private void SetMowRange(float mowRange)
-        {
-            MowRange = mowRange;
+            return type == AbilityType.Tool 
+                ? _toolService.GetLevel() + 1 
+                : _inventoryService.GetLevel() + 1;
         }
     }
 }
