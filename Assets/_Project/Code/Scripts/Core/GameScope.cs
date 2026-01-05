@@ -17,6 +17,7 @@ namespace Project.Core
         [SerializeField] private AbilityServiceConfig _abilityServiceConfig;
         [SerializeField] private InventoryServiceConfig _inventoryServiceConfig;
         [SerializeField] private TradeServiceConfig _tradeServiceConfig;
+        [SerializeField] private BankServiceConfig _bankServiceConfig;
         [Header("Presenters")]
         [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
         [SerializeField] private InfoPresenterConfig _infoPresenterConfig;
@@ -52,7 +53,8 @@ namespace Project.Core
                 .WithParameter(_inventoryServiceConfig);
 
             builder.Register<BankService>(Lifetime.Scoped)
-                .As<IBankService>();
+                .As<IBankService>()
+                .WithParameter(_bankServiceConfig);
             
             builder.Register<ToolService>(Lifetime.Scoped)
                 .As<IToolService>();

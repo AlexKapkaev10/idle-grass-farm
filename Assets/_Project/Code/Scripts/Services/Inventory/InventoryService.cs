@@ -27,6 +27,12 @@ namespace Project.Services
             _config = config;
         }
 
+        void IInventoryService.Initialize(int level, float capacity)
+        {
+            _level = level;
+            _capacity = (int)capacity;
+        }
+
         public void Commit(ResourceType type)
         {
             int committedAmount = 0;

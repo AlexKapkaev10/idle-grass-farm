@@ -1,6 +1,8 @@
+using System;
+
 namespace Project.Game
 {
-    public interface IAbilityService
+    public interface IAbilityService : IDisposable
     {
         float GetMowRange();
         void UpdateLevel(AbilityType type);

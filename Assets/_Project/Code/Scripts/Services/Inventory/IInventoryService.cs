@@ -7,6 +7,7 @@ namespace Project.Services
     {
         event Action<ResourceType, int> InventoryUpdated;
         event Action InventoryUpgraded;
+        void Initialize(int level, float capacity);
         void UpgradeLevel(float capacity);
         void Commit(ResourceType configResourceType);
         int GetLevel();

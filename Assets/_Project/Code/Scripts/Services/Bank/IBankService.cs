@@ -3,7 +3,7 @@ using Project.Game;
 
 namespace Project.Services
 {
-    public interface IBankService
+    public interface IBankService : IDisposable
     {
         event Action<BankMessageData> BankUpdated;
         bool Has(ResourceType resourceType, int amount);

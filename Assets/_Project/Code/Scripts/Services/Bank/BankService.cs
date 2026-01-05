@@ -1,5 +1,6 @@
 using System;
 using Project.Game;
+using Project.ScriptableObjects;
 using UnityEngine;
 using VContainer;
 
@@ -7,16 +8,22 @@ namespace Project.Services
 {
     public class BankService : IBankService
     {
+        private readonly ISaveLoadService _saveLoadService;
+        private readonly BankServiceConfig _config;
         private int _firstCurrency;
         private int _secondCurrency;
 
         public event Action<BankMessageData> BankUpdated;
 
         [Inject]
-        public BankService()
+        public BankService(ISaveLoadService saveLoadService, BankServiceConfig config)
         {
-            SetCurrencyAmount(ResourceType.First, 10);
-            SetCurrencyAmount(ResourceType.Second, 10);
+            _saveLoadService = saveLoadService;
+            _config = config;
+            SetCurrencyAmount(ResourceType.First, 
+                _saveLoadService.LoadInt(_config.GetCurrencySaveKeyByType(ResourceType.First)));
+            SetCurrencyAmount(ResourceType.Second, 
+                _saveLoadService.LoadInt(_config.GetCurrencySaveKeyByType(ResourceType.Second)));
         }
 
         public bool Has(ResourceType resourceType, int amount)
@@ -48,6 +55,12 @@ namespace Project.Services
             BankUpdated?.Invoke(new BankMessageData(resourceType, 
                 newAmount - amount,
                 newAmount));
+        }
+
+        public void Dispose()
+        {
+            _saveLoadService.SaveInt(_firstCurrency, _config.GetCurrencySaveKeyByType(ResourceType.First));
+            _saveLoadService.SaveInt(_secondCurrency, _config.GetCurrencySaveKeyByType(ResourceType.Second));
         }
     }
 }

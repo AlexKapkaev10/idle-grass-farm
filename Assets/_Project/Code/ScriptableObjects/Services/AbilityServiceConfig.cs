@@ -9,8 +9,19 @@ namespace Project.ScriptableObjects
     {
         [SerializeField] private UpgradeAbilityRecipe[] _toolAbilityRecipes;
         [SerializeField] private UpgradeAbilityRecipe[] _inventoryAbilityRecipes;
+        
+        private const string _saveInventoryLevelKey = "InventoryLevelSaveKey";
+        private const string _saveToolLevelKey = "ToolLevelSaveKey";
+        
+        public string GetSaveInventoryLevelKey()
+        {
+            return _saveInventoryLevelKey;
+        }
 
-        [field: SerializeField] public int StartToolLevel { get; private set; }
+        public string GetSaveToolLevelKey()
+        {
+            return _saveToolLevelKey;
+        }
 
         public float GetToolRangeByLevel(int level)
         {

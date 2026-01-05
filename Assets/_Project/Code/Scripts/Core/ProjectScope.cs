@@ -17,6 +17,9 @@ namespace Project.Core
             builder.Register<SceneLoadService>(Lifetime.Singleton)
                 .As<ISceneLoadService>();
             
+            builder.Register<SaveLoadService>(Lifetime.Singleton)
+                .As<ISaveLoadService>();
+            
             builder.Register<InputService>(Lifetime.Singleton)
                 .As<IInputService>();
             

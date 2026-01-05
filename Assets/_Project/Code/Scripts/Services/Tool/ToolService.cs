@@ -4,6 +4,7 @@ namespace Project.Services
     {
         int GetLevel();
         float GetMowRange();
+        void Initialize(int level, float mowRange);
         void UpgradeLevel(float mowRange);
     }
     
@@ -11,6 +12,12 @@ namespace Project.Services
     {
         private int _level;
         private float _mowRange;
+
+        void IToolService.Initialize(int level, float mowRange)
+        {
+            _level = level;
+            _mowRange = mowRange;
+        }
 
         public void UpgradeLevel(float mowRange)
         {

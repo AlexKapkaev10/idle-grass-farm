@@ -9,24 +9,30 @@ namespace Project.Game
         private readonly IBankService _bankService;
         private readonly IInventoryService _inventoryService;
         private readonly IToolService _toolService;
+        private readonly ISaveLoadService _saveLoadService;
         private readonly AbilityServiceConfig _config;
 
         [Inject]
         public AbilityService(IBankService bankService, 
             IInventoryService inventoryService,
             IToolService toolService,
+            ISaveLoadService saveLoadService,
             AbilityServiceConfig config)
         {
             _bankService = bankService;
             _inventoryService = inventoryService;
             _toolService = toolService;
+            _saveLoadService = saveLoadService;
             _config = config;
+
+            var toolLevel = _saveLoadService.LoadInt(_config.GetSaveToolLevelKey(), 1);
+            var inventoryLevel = _saveLoadService.LoadInt(_config.GetSaveInventoryLevelKey(), 1);
             
-            _toolService.UpgradeLevel(_config.GetRecipe(AbilityType.Tool, 
-                GetNextLevel(AbilityType.Tool)).Value);
+            _toolService.Initialize(toolLevel, 
+                _config.GetRecipe(AbilityType.Tool, toolLevel).Value);
             
-            _inventoryService.UpgradeLevel(_config.GetRecipe(AbilityType.Inventory, 
-                GetNextLevel(AbilityType.Inventory)).Value);
+            _inventoryService.Initialize(inventoryLevel, 
+                _config.GetRecipe(AbilityType.Inventory, inventoryLevel).Value);
         }
 
         public void UpdateLevel(AbilityType type)
@@ -75,6 +81,12 @@ namespace Project.Game
             return type == AbilityType.Tool 
                 ? _toolService.GetLevel() + 1 
                 : _inventoryService.GetLevel() + 1;
+        }
+
+        public void Dispose()
+        {
+            _saveLoadService.SaveInt(_inventoryService.GetLevel(), _config.GetSaveInventoryLevelKey());
+            _saveLoadService.SaveInt(_toolService.GetLevel(), _config.GetSaveToolLevelKey());
         }
     }
 }
