@@ -4,7 +4,7 @@ namespace Project.Game
 {
     public interface ICashboxController
     {
-        event Action<bool> PlayerEntered;
+        event Action<bool> SellerEntered;
         QueuePoint[] QueuePoints { get; }
         int QueuePointsCount { get; }
         void Enter();
@@ -18,7 +18,7 @@ namespace Project.Game
         public QueuePoint[] QueuePoints { get; private set; }
         public int QueuePointsCount => QueuePoints.Length;
 
-        public event Action<bool> PlayerEntered;
+        public event Action<bool> SellerEntered;
 
         public void SetQueuePoints(QueuePoint[] queuePoints)
         {
@@ -27,12 +27,12 @@ namespace Project.Game
 
         public void Enter()
         {
-            PlayerEntered?.Invoke(true);
+            SellerEntered?.Invoke(true);
         }
 
         public void Exit()
         {
-            PlayerEntered?.Invoke(false);
+            SellerEntered?.Invoke(false);
         }
 
         public QueuePoint GetFreeQueuePoint()

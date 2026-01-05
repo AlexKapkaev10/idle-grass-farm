@@ -41,7 +41,7 @@ namespace Project.Services
         {
             _loaderPresenter.SetActiveView(false);
             _inputService.SwitchMap(InputMapType.Player);
-            _tradeService.Start();
+            _tradeService.Initialize();
 
             if (_config.NeedJoystick)
             {
