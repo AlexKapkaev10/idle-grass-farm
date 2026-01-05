@@ -18,3 +18,4 @@ MonoBehaviour:
   <EndGrowDuration>k__BackingField: 1
   <DelayGrowValue>k__BackingField: 0.5
   <CurveConfig>k__BackingField: {fileID: 11400000, guid: 87ccaf01a5da9bf40b514cca241df80e, type: 2}
+  <MowVFXPrefab>k__BackingField: {fileID: 198705620891716698, guid: 22211b5004798d64a81e4b9aa602a06a, type: 3}

@@ -13,6 +13,7 @@ namespace Project.Services
         private readonly IInputService _inputService;
         private readonly ICameraService _cameraService;
         private readonly IAbilityService _abilityService;
+        private readonly IInventoryService _inventoryService;
         private readonly PlayerServiceConfig _config;
 
         private IPlayer _player;
@@ -28,11 +29,13 @@ namespace Project.Services
         public PlayerService(IInputService inputService, 
             ICameraService cameraService, 
             IAbilityService abilityService, 
+            IInventoryService inventoryService,
             PlayerServiceConfig config)
         {
             _inputService = inputService;
             _cameraService = cameraService;
             _abilityService = abilityService;
+            _inventoryService = inventoryService;
             _config = config;
         }
 
@@ -49,20 +52,56 @@ namespace Project.Services
             
             _movement.Running += OnRun;
             _animatorComponent.EventsReceiver.Mowed += OnMow;
+            _abilityService.AbilitiesUpdated += OnAbilitiesUpdated;
+        }
+
+        private void OnInventoryUpgraded(ResourceType type, int amount)
+        {
+            ShowEffect(EffectType.CollectResource);
+        }
+
+        private void OnAbilitiesUpdated(AbilityType type)
+        {
+            ShowEffect(EffectType.Upgrade);
         }
 
         public void SetMow(int animationID, bool isActive)
         {
+            if (isActive)
+            {
+                _inventoryService.InventoryUpdated += OnInventoryUpgraded;
+            }
+            else
+            {
+                _inventoryService.InventoryUpdated -= OnInventoryUpgraded;
+            }
+            
             DisplayToolRange(isActive);
             SetAnimationBool(animationID, isActive);
-            
             SetTool(isActive);
         }
 
-        public void Dispose()
+        public void ShowEffect(EffectType effectType)
+        {
+            switch (effectType)
+            {
+                case EffectType.Upgrade:
+                    var upgradeEffect = Object.Instantiate(_config.UpgradeVFXPrefab, _player.Transform);
+                    Object.Destroy(upgradeEffect.gameObject, 3);
+                    break;
+                case EffectType.CollectResource:
+                    var collectEffect = Object.Instantiate(_config.CollectVFXPrefab, _player.Transform);
+                    Object.Destroy(collectEffect.gameObject, 3);
+                    break;
+            }
+        }
+
+        void IDisposable.Dispose()
         {
             _movement.Running -= OnRun;
             _animatorComponent.EventsReceiver.Mowed -= OnMow;
+            _abilityService.AbilitiesUpdated -= OnAbilitiesUpdated;
+            _inventoryService.InventoryUpdated -= OnInventoryUpgraded;
             
             _searchModel?.Dispose();
         }

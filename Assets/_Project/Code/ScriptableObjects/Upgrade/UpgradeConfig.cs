@@ -8,5 +8,7 @@ namespace Project.ScriptableObjects
     {
         [field: SerializeField] public Material Material { get; private set; }
         [field: SerializeField] public AbilityType Type { get; private set; }
+        [field: SerializeField] public string TextHeader { get; private set; }
+        [field: SerializeField] public string TextDescription { get; private set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Project.Game
         private readonly IUpgradeModel _model = new UpgradeModel();
 
         private UpgradeViewItem _viewItem;
+        private UpgradeConfig _config;
 
         [Inject]
         public UpgradeController(IBankService bankService, IAbilityService abilityService)
@@ -30,10 +31,14 @@ namespace Project.Game
 
         public void Initialize(UpgradeViewItem viewItem, UpgradeConfig config)
         {
-            _viewItem = viewItem;
+            _config = config;
+
             _model.Initialize(config.Type);
             _bankService.BankUpdated += OnBankUpdate;
 
+            _viewItem = viewItem;
+            _viewItem.SetHeader(_config.TextHeader);
+            _viewItem.SetDescription($"{_config.TextDescription} {_abilityService.GetLevelByType(_model.GetType())}");
             CheckHasUpgrade(_model.GetType());
         }
 
@@ -55,6 +60,7 @@ namespace Project.Game
             }
             
             _abilityService.UpdateLevel(_model.GetType());
+            _viewItem.SetDescription($"{_config.TextDescription} {_abilityService.GetLevelByType(_model.GetType())}");
             CheckHasUpgrade(_model.GetType());
         }
 

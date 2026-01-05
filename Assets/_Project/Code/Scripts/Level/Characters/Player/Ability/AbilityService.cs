@@ -1,3 +1,4 @@
+using System;
 using Project.ScriptableObjects;
 using Project.Services;
 using VContainer;
@@ -11,6 +12,8 @@ namespace Project.Game
         private readonly IToolService _toolService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly AbilityServiceConfig _config;
+        public event Action<AbilityType> AbilitiesUpdated;
+
 
         [Inject]
         public AbilityService(IBankService bankService, 
@@ -51,6 +54,13 @@ namespace Project.Game
                     _inventoryService.UpgradeLevel(recipe.Value);
                     break;
             }
+            
+            AbilitiesUpdated?.Invoke(type);
+        }
+
+        public int GetLevelByType(AbilityType type)
+        {
+            return type == AbilityType.Inventory ? _inventoryService.GetLevel() : _toolService.GetLevel();
         }
 
         public bool HasUpgrade(AbilityType type)

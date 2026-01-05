@@ -12,5 +12,6 @@ namespace Project.ScriptableObjects
         [field: SerializeField] public float EndGrowDuration { get; private set; }
         [field: SerializeField] public float DelayGrowValue { get; private set; }
         [field: SerializeField] public AnimationCurveConfig CurveConfig { get; private set; }
+        [field: SerializeField] public ParticleSystem MowVFXPrefab { get; private set; }
     }
 }

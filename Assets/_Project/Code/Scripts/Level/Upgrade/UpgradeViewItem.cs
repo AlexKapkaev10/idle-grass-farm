@@ -8,6 +8,17 @@ namespace Project.Game
     {
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _textHeader;
+        [SerializeField] private TMP_Text _textDescription;
+
+        public void SetHeader(string header)
+        {
+            _textHeader.SetText(header);
+        }
+
+        public void SetDescription(string description)
+        {
+            _textDescription.SetText(description);
+        }
 
         public void SetActiveIndicator(bool isActive)
         {

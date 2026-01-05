@@ -28,6 +28,9 @@ namespace Project.Game
         {
             CanMow = false;
             
+            var effect = Instantiate(_config.MowVFXPrefab, transform);
+            Destroy(effect, 1);
+            
             _resourceItem = Instantiate(_config.ResourceItemPrefab);
             _resourceItem.Initialize(transform.position, resourceMaterial);
 

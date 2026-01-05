@@ -17,3 +17,5 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 4
   <RotateSpeed>k__BackingField: 800
   <SearchModelConfig>k__BackingField: {fileID: 11400000, guid: f7db606ac391f6346879ae67bad29a78, type: 2}
+  <UpgradeVFXPrefab>k__BackingField: {fileID: 4605560754940605642, guid: 8bcea295b49837545a6ae2b77ea36cd3, type: 3}
+  <CollectVFXPrefab>k__BackingField: {fileID: 1146672930164006510, guid: 45d1fa6ae23406745b210755c55553cb, type: 3}

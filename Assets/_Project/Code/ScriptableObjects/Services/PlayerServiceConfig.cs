@@ -11,6 +11,8 @@ namespace Project.ScriptableObjects
         [field: SerializeField] public float MoveSpeed { get; private set; } = 5.0f;
         [field: SerializeField] public float RotateSpeed { get; private set; } = 180.0f;
         [field: SerializeField] public SearchModelConfig SearchModelConfig { get; private set; }
+        [field: SerializeField] public ParticleSystem UpgradeVFXPrefab { get; private set; }
+        [field: SerializeField] public ParticleSystem CollectVFXPrefab { get; private set; }
         
         public int IsRun => Animator.StringToHash("IsRun");
      }

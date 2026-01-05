@@ -10,5 +10,12 @@ namespace Project.Services
         public Transform Transform { get; }
         public Transform BodyTransform { get; }
         void SetMow(int animationID, bool isActive);
+        void ShowEffect(EffectType effectType);
+    }
+
+    public enum EffectType
+    {
+        Upgrade,
+        CollectResource
     }
 }
