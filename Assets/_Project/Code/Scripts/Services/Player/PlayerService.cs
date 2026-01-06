@@ -52,7 +52,14 @@ namespace Project.Services
             
             _movement.Running += OnRun;
             _animatorComponent.EventsReceiver.Mowed += OnMow;
+            _animatorComponent.EventsReceiver.Stepped += OnStep;
             _abilityService.AbilitiesUpdated += OnAbilitiesUpdated;
+        }
+
+        private void OnStep()
+        {
+            _player.AudioSource.clip = _config.GetStepClip();
+            _player.AudioSource.Play();
         }
 
         private void OnInventoryUpgraded(ResourceType type, int amount)
@@ -102,6 +109,7 @@ namespace Project.Services
             _animatorComponent.EventsReceiver.Mowed -= OnMow;
             _abilityService.AbilitiesUpdated -= OnAbilitiesUpdated;
             _inventoryService.InventoryUpdated -= OnInventoryUpgraded;
+            _animatorComponent.EventsReceiver.Stepped -= OnStep;
             
             _searchModel?.Dispose();
         }

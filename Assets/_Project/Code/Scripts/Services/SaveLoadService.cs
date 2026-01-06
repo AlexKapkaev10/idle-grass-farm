@@ -10,7 +10,7 @@ namespace Project.Services
         float LoadFloat(string key, float defaultValue = 0);
     }
     
-    public class SaveLoadService : ISaveLoadService
+    public sealed class SaveLoadService : ISaveLoadService
     {
         public void SaveInt(int value, string key)
         {

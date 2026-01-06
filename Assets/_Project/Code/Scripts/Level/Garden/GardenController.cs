@@ -16,6 +16,7 @@ namespace Project.Game
         private List<IResourceItem> _resourceItems = new ();
 
         private IGardenItem[] _items;
+        private AudioSource _audioSource;
         private GardenConfig _config;
 
         [Inject]
@@ -28,9 +29,10 @@ namespace Project.Game
             _inventoryService = inventoryService;
         }
 
-        public void Initialize(IGardenItem[] items, GardenConfig config)
+        public void Initialize(IGardenItem[] items, AudioSource audioSource, GardenConfig config)
         {
             _config = config;
+            _audioSource = audioSource;
 
             _items = items;
             foreach (var item in _items)
@@ -96,6 +98,8 @@ namespace Project.Game
 
         private void OnMow()
         {
+            PlayAudio(_config.MowAudioClip);
+
             foreach (var item in _items)
             {
                 if (!item.CanMow)
@@ -119,6 +123,11 @@ namespace Project.Game
                     _resourceItems.Add(resourceItem);
                 }
             }
+        }
+
+        private void PlayAudio(AudioClip clip)
+        {
+            _audioSource.PlayOneShot(clip);
         }
 
         private void SendResource(IResourceItem item, float delay = 0.0f)

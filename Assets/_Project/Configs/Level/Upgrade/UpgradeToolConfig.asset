@@ -16,3 +16,4 @@ MonoBehaviour:
   <Type>k__BackingField: 0
   <TextHeader>k__BackingField: Upgrade\nTool
   <TextDescription>k__BackingField: 'current level:'
+  <UpgradeAudioClip>k__BackingField: {fileID: 8300000, guid: 895cc54e0a555f94c9facf5bf17d1a8b, type: 3}

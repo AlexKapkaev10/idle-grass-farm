@@ -49,3 +49,4 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _loaderPresenterConfig: {fileID: 11400000, guid: 9adc276d2e9ebe34b8e1bfe64dc7d390, type: 2}
+  _audioServiceConfig: {fileID: 11400000, guid: 5669e8338787901468e116fe562af302, type: 2}

@@ -6,10 +6,16 @@ namespace Project.Game
     public class AnimationEventsReceiver : MonoBehaviour
     {
         public event Action Mowed;
+        public event Action Stepped;
         
         public void Mow()
         {
             Mowed?.Invoke();
+        }
+
+        public void OnStep()
+        {
+            Stepped?.Invoke();
         }
     }
 }

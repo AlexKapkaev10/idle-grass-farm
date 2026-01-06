@@ -11,6 +11,7 @@ namespace Project.Core
     public sealed class ProjectScope : LifetimeScope
     {
         [SerializeField] private LoaderPresenterConfig _loaderPresenterConfig;
+        [SerializeField] private AudioServiceConfig _audioServiceConfig;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -26,6 +27,11 @@ namespace Project.Core
             builder.Register<LoaderPresenter>(Lifetime.Singleton)
                 .As<ILoaderPresenter>()
                 .WithParameter(_loaderPresenterConfig);
+            
+            builder.Register<AudioService>(Lifetime.Singleton)
+                .As<IAudioService>()
+                .As<IStartable>()
+                .WithParameter(_audioServiceConfig);
         }
     }
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   <CellMaterial>k__BackingField: {fileID: 2100000, guid: 86ef7d228c0c54044a376b0cf75dc18a, type: 2}
   <ResourceMaterial>k__BackingField: {fileID: 2100000, guid: 15cb76a728eb2c447833a4e2b659b8a0, type: 2}
   <ResourceType>k__BackingField: 1
+  <MowAudioClip>k__BackingField: {fileID: 8300000, guid: 731b1eb9811c06843aa855b0eea0719c, type: 3}

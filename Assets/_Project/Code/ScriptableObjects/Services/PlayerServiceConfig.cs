@@ -13,7 +13,14 @@ namespace Project.ScriptableObjects
         [field: SerializeField] public SearchModelConfig SearchModelConfig { get; private set; }
         [field: SerializeField] public ParticleSystem UpgradeVFXPrefab { get; private set; }
         [field: SerializeField] public ParticleSystem CollectVFXPrefab { get; private set; }
-        
+        [field: SerializeField] public AudioClip[] StepClips { get; private set; }
+        [field: SerializeField] public AudioClip MowAudioClip { get; private set; }
+        [field: SerializeField] public AudioClip UpgradeAudioClip { get; private set; }
         public int IsRun => Animator.StringToHash("IsRun");
+
+        public AudioClip GetStepClip()
+        {
+            return StepClips[Random.Range(0, StepClips.Length)];
+        }
      }
 }

@@ -10,5 +10,6 @@ namespace Project.ScriptableObjects
         [field: SerializeField] public AbilityType Type { get; private set; }
         [field: SerializeField] public string TextHeader { get; private set; }
         [field: SerializeField] public string TextDescription { get; private set; }
+        [field: SerializeField] public AudioClip UpgradeAudioClip { get; private set; }
     }
 }

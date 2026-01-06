@@ -19,3 +19,8 @@ MonoBehaviour:
   <SearchModelConfig>k__BackingField: {fileID: 11400000, guid: f7db606ac391f6346879ae67bad29a78, type: 2}
   <UpgradeVFXPrefab>k__BackingField: {fileID: 4605560754940605642, guid: 8bcea295b49837545a6ae2b77ea36cd3, type: 3}
   <CollectVFXPrefab>k__BackingField: {fileID: 1146672930164006510, guid: 45d1fa6ae23406745b210755c55553cb, type: 3}
+  <StepClips>k__BackingField:
+  - {fileID: 8300000, guid: 9aaed84ad52a2614e98f5801fb73c8a7, type: 3}
+  - {fileID: 8300000, guid: 945fc80442ed59149b44e8f500acaefa, type: 3}
+  <MowAudioClip>k__BackingField: {fileID: 8300000, guid: 70edd085b007c7a42b7829b90b29a9de, type: 3}
+  <UpgradeAudioClip>k__BackingField: {fileID: 8300000, guid: 895cc54e0a555f94c9facf5bf17d1a8b, type: 3}

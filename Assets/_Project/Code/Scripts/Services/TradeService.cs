@@ -15,14 +15,13 @@ namespace Project.Game
         void Initialize();
     }
 
-    public class TradeService : ITradeService
+    public sealed class TradeService : ITradeService
     {
         private readonly ICashboxController _cashboxController;
         private readonly IInventoryService _inventoryService;
+        private readonly IAudioService _audioService;
         private readonly TradeServiceConfig _config;
-
         private readonly CancellationTokenSource _cts = new();
-
         private readonly List<Customer> _customers = new();
 
         private Customer _firstCustomer;
@@ -32,10 +31,12 @@ namespace Project.Game
         public TradeService(
             ICashboxController cashboxController,
             IInventoryService inventoryService,
+            IAudioService audioService,
             TradeServiceConfig config)
         {
             _cashboxController = cashboxController;
             _inventoryService = inventoryService;
+            _audioService = audioService;
             _config = config;
         }
 
@@ -139,7 +140,11 @@ namespace Project.Game
                 return;
             }
             
-            _firstCustomer.GetMoveModel().Arrived -= OnFirstCustomerArrived;
+            Sell();
+        }
+
+        private void Sell()
+        {
             _firstCustomer.SetEmoji(_config.GetRandomEmoji());
             _firstCustomer.ReleasePoint();
             _firstCustomer.StartMove(_config.CustomerExitPosition, true);
@@ -149,14 +154,13 @@ namespace Project.Game
 
             RebuildQueue();
             
-            if (_hasSeller)
-            {
-                TrySell();
-            }
+            _audioService.PlayClip(_config.SellAudioClip);
         }
 
         private void OnFirstCustomerArrived()
         {
+            _firstCustomer.GetMoveModel().Arrived -= OnFirstCustomerArrived;
+            
             if (_hasSeller)
             {
                 TrySell();

@@ -21,6 +21,8 @@ namespace Project.ScriptableObjects
         [field: SerializeField] public Sprite FirstResourceSprite { get; private set; }
         [field: SerializeField] public Sprite SecondResourceSprite { get; private set; }
         [field: SerializeField] public Sprite[] Emojis { get; private set; }
+        [field: Header("Audio Settings")]
+        [field: SerializeField] public AudioClip SellAudioClip { get; private set; }
         
         public Sprite GetResourceSprite(ResourceType type)
         {

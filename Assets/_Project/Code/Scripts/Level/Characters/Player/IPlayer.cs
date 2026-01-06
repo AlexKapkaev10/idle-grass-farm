@@ -11,5 +11,6 @@ namespace Project.Game
         Transform GroundTransform { get;}
         Transform ToolParent { get; }
         Transform ToolRangeTransform { get; }
+        AudioSource AudioSource { get; }
     }
 }
