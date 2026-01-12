@@ -93,8 +93,8 @@ namespace Project.Services
                     _secondResourceCount -= amount;
                     break;
             }
-            
-            _bankService.SetCurrencyAmount(type, 10);
+
+            _bankService.SetCurrencyAmount(type, _config.GetRandomPrice());
             
             InventoryUpdated?.Invoke(type,
                 type == ResourceType.First ? _firstResourceCount : _secondResourceCount

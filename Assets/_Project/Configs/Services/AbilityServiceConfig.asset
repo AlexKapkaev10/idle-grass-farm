@@ -12,37 +12,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9adddbf8ac5f4cee97cbcf1171b8072d, type: 3}
   m_Name: AbilityServiceConfig
   m_EditorClassIdentifier: 
-  _abilityDates:
-  - Level: 1
-    Value: 1.6
-  - Level: 2
-    Value: 2
-  - Level: 3
-    Value: 2.6
   _toolAbilityRecipes:
   - Level: 1
     FirstCurrencyAmount: 0
     SecondCurrencyAmount: 0
-    Value: 1.6
+    Value: 1.5
   - Level: 2
     FirstCurrencyAmount: 10
     SecondCurrencyAmount: 10
-    Value: 2
+    Value: 1.7
   - Level: 3
-    FirstCurrencyAmount: 20
-    SecondCurrencyAmount: 20
-    Value: 2.6
+    FirstCurrencyAmount: 11
+    SecondCurrencyAmount: 11
+    Value: 1.9
+  - Level: 4
+    FirstCurrencyAmount: 12
+    SecondCurrencyAmount: 12
+    Value: 2.1
+  - Level: 5
+    FirstCurrencyAmount: 13
+    SecondCurrencyAmount: 13
+    Value: 2.3
+  - Level: 6
+    FirstCurrencyAmount: 14
+    SecondCurrencyAmount: 14
+    Value: 2.5
+  - Level: 6
+    FirstCurrencyAmount: 14
+    SecondCurrencyAmount: 14
+    Value: 2.7
+  - Level: 8
+    FirstCurrencyAmount: 15
+    SecondCurrencyAmount: 15
+    Value: 2.9
   _inventoryAbilityRecipes:
   - Level: 1
     FirstCurrencyAmount: 0
     SecondCurrencyAmount: 0
-    Value: 10
+    Value: 3
   - Level: 2
     FirstCurrencyAmount: 10
     SecondCurrencyAmount: 10
-    Value: 15
+    Value: 6
   - Level: 3
-    FirstCurrencyAmount: 20
-    SecondCurrencyAmount: 20
-    Value: 20
-  <StartToolLevel>k__BackingField: 1
+    FirstCurrencyAmount: 15
+    SecondCurrencyAmount: 15
+    Value: 9
+  - Level: 4
+    FirstCurrencyAmount: 18
+    SecondCurrencyAmount: 18
+    Value: 12
+  - Level: 5
+    FirstCurrencyAmount: 23
+    SecondCurrencyAmount: 23
+    Value: 15
+  - Level: 6
+    FirstCurrencyAmount: 25
+    SecondCurrencyAmount: 25
+    Value: 18
+  - Level: 7
+    FirstCurrencyAmount: 28
+    SecondCurrencyAmount: 28
+    Value: 18
+  - Level: 8
+    FirstCurrencyAmount: 31
+    SecondCurrencyAmount: 31
+    Value: 24

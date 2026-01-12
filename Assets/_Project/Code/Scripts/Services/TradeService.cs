@@ -12,6 +12,7 @@ namespace Project.Game
 {
     public interface ITradeService : IDisposable
     {
+        event Action Traded;
         void Initialize();
     }
 
@@ -26,6 +27,8 @@ namespace Project.Game
 
         private Customer _firstCustomer;
         private bool _hasSeller;
+
+        public event Action Traded;
 
         [Inject]
         public TradeService(
