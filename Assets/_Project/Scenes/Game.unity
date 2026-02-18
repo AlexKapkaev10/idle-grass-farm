@@ -1209,6 +1209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 02b3778da70ecbb409c5ad5d670ffd31, type: 2}
     - target: {fileID: 7061987207832303220, guid: 1efe4cd6d2ca1404b9c479fda254b840, type: 3}
+      propertyPath: _poolServiceConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 8945130c4970dc640b90c85b5e418628, type: 2}
+    - target: {fileID: 7061987207832303220, guid: 1efe4cd6d2ca1404b9c479fda254b840, type: 3}
       propertyPath: 'autoInjectGameObjects.Array.data[0]'
       value: 
       objectReference: {fileID: 1517108566}

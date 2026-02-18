@@ -13,28 +13,32 @@ namespace Project.Game
         private readonly IPlayerService _playerService;
         private readonly IAbilityService _abilityService;
         private readonly IInventoryService _inventoryService;
+        private readonly IPoolService _poolService;
+        
         private List<IResourceItem> _resourceItems = new ();
-
         private IGardenItem[] _items;
         private AudioSource _audioSource;
         private GardenConfig _config;
 
         [Inject]
-        public GardenController(IPlayerService playerService, 
+        public GardenController(
+            IPlayerService playerService, 
             IAbilityService abilityService, 
-            IInventoryService inventoryService)
+            IInventoryService inventoryService,
+            IPoolService poolService)
         {
             _playerService = playerService;
             _abilityService = abilityService;
             _inventoryService = inventoryService;
+            _poolService = poolService;
         }
 
         public void Initialize(IGardenItem[] items, AudioSource audioSource, GardenConfig config)
         {
             _config = config;
             _audioSource = audioSource;
-
             _items = items;
+            
             foreach (var item in _items)
             {
                 item.Initialize(_config.CellMaterial);
@@ -112,7 +116,9 @@ namespace Project.Game
                     continue;
                 }
 
-                item.Mow(_config.ResourceMaterial, out var resourceItem);
+                var resourceItem = _poolService.GetGardenResource();
+
+                item.Mow(_config.ResourceMaterial, resourceItem);
                 
                 if (_inventoryService.TryReserve(_config.ResourceType))
                 {
@@ -132,7 +138,15 @@ namespace Project.Game
 
         private void SendResource(IResourceItem item, float delay = 0.0f)
         {
+            item.Collected += OnResourceCollected;
             item.MoveToTarget(_playerService.Transform, delay, CollectResource);
+        }
+
+        private void OnResourceCollected(IResourceItem item)
+        {
+            item.Collected -= OnResourceCollected;
+            
+            _poolService.ReleaseResourceItem(item);
         }
 
         private void CollectResource(int amount)

@@ -12,5 +12,8 @@ namespace Project.ScriptableObjects
         [field: SerializeField] public Material ResourceMaterial { get; private set; }
         [field: SerializeField] public ResourceType ResourceType { get; private set; }
         [field: SerializeField] public AudioClip MowAudioClip { get; private set; }
+        
+        [field: SerializeField] public ParticleSystem MowVFXPrefab { get; private set; }
+        [field: SerializeField] public ResourceItem ResourceItemPrefab { get; private set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Project.Core
         [SerializeField] private InventoryServiceConfig _inventoryServiceConfig;
         [SerializeField] private TradeServiceConfig _tradeServiceConfig;
         [SerializeField] private BankServiceConfig _bankServiceConfig;
+        [SerializeField] private PoolServiceConfig _poolServiceConfig;
         [Header("Presenters")]
         [SerializeField] private JoystickPresenterConfig _joystickPresenterConfig;
         [SerializeField] private InfoPresenterConfig _infoPresenterConfig;
@@ -62,6 +63,11 @@ namespace Project.Core
             builder.Register<TradeService>(Lifetime.Scoped)
                 .As<ITradeService>()
                 .WithParameter(_tradeServiceConfig);
+            
+            builder.Register<PoolService>(Lifetime.Scoped)
+                .As<IPoolService>()
+                .As<IInitializable>()
+                .WithParameter(_poolServiceConfig);
         }
 
         private static void RegisterMVC(IContainerBuilder builder)

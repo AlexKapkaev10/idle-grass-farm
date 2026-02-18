@@ -7,7 +7,7 @@ namespace Project.Game
         bool CanMow { get; }
         Transform Transform { get; }
         void Initialize(Material material);
-        void Mow(Material resourceMaterial, out IResourceItem resourceItem);
+        void Mow(Material resourceMaterial, IResourceItem item);
         void Grow();
     }
 }

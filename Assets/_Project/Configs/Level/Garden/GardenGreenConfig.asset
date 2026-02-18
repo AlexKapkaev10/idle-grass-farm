@@ -17,3 +17,5 @@ MonoBehaviour:
   <ResourceMaterial>k__BackingField: {fileID: 2100000, guid: 41d6e441c0e421d41adb6503afc8bee1, type: 2}
   <ResourceType>k__BackingField: 0
   <MowAudioClip>k__BackingField: {fileID: 8300000, guid: 70edd085b007c7a42b7829b90b29a9de, type: 3}
+  <MowVFXPrefab>k__BackingField: {fileID: 198705620891716698, guid: 22211b5004798d64a81e4b9aa602a06a, type: 3}
+  <ResourceItemPrefab>k__BackingField: {fileID: 1848833139017815409, guid: 598d27178ec39ac4291ee47e8281fbac, type: 3}

@@ -7,7 +7,7 @@ namespace Project.Game
 {
     public interface IResourceItem
     {
-        event Action Collected;
+        event Action<IResourceItem> Collected;
         Transform Transform { get; }
         void Initialize(Vector3 position, Material material, int count = 1);
         void Show();
@@ -26,7 +26,7 @@ namespace Project.Game
         private int _count;
         private Sequence _moveToSequence;
 
-        public event Action Collected;
+        public event Action<IResourceItem> Collected;
         public Transform Transform => transform;
 
         private void OnDestroy()
@@ -78,8 +78,7 @@ namespace Project.Game
                     .OnComplete(() =>
                     {
                         callback?.Invoke(_count);
-                        Collected?.Invoke();
-                        Destroy(gameObject);
+                        Collected?.Invoke(this);
                     });
             });
         }

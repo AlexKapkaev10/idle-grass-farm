@@ -42,6 +42,7 @@ namespace Project.Services
         public void Initialize()
         {
             _player = Object.Instantiate(_config.PlayerPrefab);
+            _tool = Object.Instantiate(_config.ToolPrefab, _player.ToolParent);
             
             _movement = _player.Movement;
             _animatorComponent = _player.AnimatorComponent;
@@ -85,7 +86,7 @@ namespace Project.Services
             
             DisplayToolRange(isActive);
             SetAnimationBool(animationID, isActive);
-            SetTool(isActive);
+            _tool.Display(isActive);
         }
 
         public void ShowEffect(EffectType effectType)
@@ -138,24 +139,6 @@ namespace Project.Services
         private void SetAnimationBool(int id, bool value)
         {
             _animatorComponent.SetBool(id, value);
-        }
-
-        private void SetTool(bool isActive)
-        {
-            if (isActive)
-            {
-                if (_tool != null)
-                {
-                    return;
-                }
-                
-                _tool = Object.Instantiate(_config.ToolPrefab, _player.ToolParent);
-            }
-            else
-            {
-                _tool?.Destroy();
-                _tool = null;
-            }
         }
 
         private void DisplayToolRange(bool isActive)
